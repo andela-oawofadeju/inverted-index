@@ -1,0 +1,23 @@
+{
+  "name": "inverted-index",
+  "version": "1.0.0",
+  "description": "it takes an array of objects and creates index from the array",
+  "main": "index.js",
+  "dependencies": {
+    "jshint": "^2.9.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andela-oawofadeju/inverted-index.git"
+  },
+  "author": "Olayemi Awofadeju",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andela-oawofadeju/inverted-index/issues"
+  },
+  "homepage": "https://github.com/andela-oawofadeju/inverted-index#readme"
+}
