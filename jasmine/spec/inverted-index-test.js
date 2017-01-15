@@ -19,10 +19,16 @@ describe('Inverted Index Tests', function() {
       expect(invertedIndex.readIndex).toBeDefined();
       expect(invertedIndex.readIndex.length).not.toBe(null);
     });
-  });
-  it('index maps the string keys to the correct objects in the JSON array', function() {
-    expect(invertedIndex.index.alice).toEqual([1, 0, 0]);
-    expect(invertedIndex.index.ring).toEqual([0, 0, 1]);
-  });
 
+    it('index maps the string keys to the correct objects in the JSON array', function() {
+      expect(invertedIndex.index.alice).toEqual([1, 0, 0]);
+      expect(invertedIndex.index.ring).toEqual([0, 0, 1]);
+    });
+  });
+  describe('Search Index', function() {
+    it('verifies that searching the index returns an array of the indices of the correct objects', function() {
+      expect(invertedIndex.searchIndex('alice').alice).toEqual([0]);
+      expect(invertedIndex.searchIndex('rings').ring).toEqual([1]);
+    });
+  });
 });
