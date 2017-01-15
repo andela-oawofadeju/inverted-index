@@ -7,10 +7,13 @@
     "jshint": "^2.9.4"
   },
   "devDependencies": {
+    "browser-sync": "^2.18.6",
+    "coveralls": "^2.11.15",
     "gulp": "^3.9.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\""
+    "test": "nodeunit test",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",
