@@ -14,6 +14,15 @@ describe('Inverted Index Tests', function() {
     });
   });
 
-
+  describe('Populate index', function() {
+    it('verifies that the index is created once the JSON file has been read', function() {
+      expect(invertedIndex.readIndex).toBeDefined();
+      expect(invertedIndex.readIndex.length).not.toBe(null);
+    });
+  });
+  it('index maps the string keys to the correct objects in the JSON array', function() {
+    expect(invertedIndex.index.alice).toEqual([1, 0, 0]);
+    expect(invertedIndex.index.ring).toEqual([0, 0, 1]);
+  });
 
 });
