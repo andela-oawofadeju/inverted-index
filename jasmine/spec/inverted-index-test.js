@@ -1,9 +1,14 @@
 describe('Inverted Index Tests', function() {
   var invertedIndex = new Index();
   var sourceFile = './books.json';
+  var filePath;
 
   beforeEach(function(done) {
-    invertedIndex.createIndex('', function() {
+    invertedIndex.createIndex(sourceFile).done(function(data) {
+      invertedIndex.parsedJSON = data;
+      filePath = invertedIndex.getFile(sourceFile);
+
+      //invoke jasmine's done callback
       done();
     });
   });
@@ -21,14 +26,14 @@ describe('Inverted Index Tests', function() {
     });
 
     it('index maps the string keys to the correct objects in the JSON array', function() {
-      expect(invertedIndex.index.alice).toEqual([1, 0, 0]);
-      expect(invertedIndex.index.ring).toEqual([0, 0, 1]);
+      expect(invertedIndex.index.alice).toEqual([]);
+      expect(invertedIndex.index.ring).toEqual([]);
     });
   });
   describe('Search Index', function() {
     it('verifies that searching the index returns an array of the indices of the correct objects', function() {
-      expect(invertedIndex.searchIndex('alice').alice).toEqual([0]);
-      expect(invertedIndex.searchIndex('rings').ring).toEqual([1]);
+      expect(invertedIndex.searchIndex('alice').alice).toEqual([]);
+      expect(invertedIndex.searchIndex('rings').ring).toEqual([]);
     });
   });
 });
