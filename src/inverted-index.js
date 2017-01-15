@@ -12,7 +12,10 @@ var index = function() {
         if () {};
       }
     }
-    this.createIndex = function(souceFile) {
+    this.createIndex = function(sourceFile) {
+      if (sourceFile) {
+        var dataValue = this.invertedIndex.getfile(sourceFile);
+      }
 
     }
   }
