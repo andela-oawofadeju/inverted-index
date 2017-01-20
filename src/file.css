@@ -5,20 +5,42 @@
  
  fieldset {
    margin-bottom: 10px;
-   width: 720px;
+   margin-left: 20px;
+   width: 400px;
  }
  
  .navigate {
-   border: 7px solid black;
+   margin-top: 10px;
+   border: 7px #565656;
    padding: 10px;
-   background-color: blue;
+   background-color: #76323F;
    color: white;
  }
  
- .input[type=text] {
-   width: 30px;
+ input[type=search] {
+   width: 130px;
+   box-sizing: border-box;
+   border: 2px solid #ccc;
+   border-radius: 4px;
+   font-size: 14px;
+   background-color: white;
+   background-image: url('searchicon.png');
+   background-position: 10px 10px;
+   background-repeat: no-repeat;
    -webkit-transition: width 0.4s ease-in-out;
    transition: width 0.4s ease-in-out;
+ }
+ 
+ .text {
+   border: 2px solid #ccc;
+   border-radius: 4px;
+   -webkit-transition: width 0.4s ease-in-out;
+   transition: width 0.4s ease-in-out;
+ }
+ 
+ .btn-group {
+   width: 100px;
+   border-radius: 4px;
  }
  /* When the input field gets focus, change its width to 100% */
  
