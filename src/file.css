@@ -1,0 +1,27 @@
+ body {
+   font-size: 19px;
+   color: #260126;
+ }
+ 
+ fieldset {
+   margin-bottom: 10px;
+   width: 720px;
+ }
+ 
+ .navigate {
+   border: 7px solid black;
+   padding: 10px;
+   background-color: blue;
+   color: white;
+ }
+ 
+ .input[type=text] {
+   width: 30px;
+   -webkit-transition: width 0.4s ease-in-out;
+   transition: width 0.4s ease-in-out;
+ }
+ /* When the input field gets focus, change its width to 100% */
+ 
+ input[type=text]:focus {
+   width: 50%;
+ }
