@@ -1,24 +1,6 @@
-var books = [{
-    "title": "Alice in Wonderland",
-    "text": "Alice falls into elf a rabbit, hole. and enters a world full of imagination.",
-  },
+const books = require('./books.js').books;
 
-  {
-    "title": "The Lord of the Rings: The Fellowship of the Ring.",
-    "text": "An alice unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring. imagination"
-  }
-];
-var bookTwo = [{
-    "title": "Alice in Wonderland",
-    "text": "and enters a world full of imagination.",
-  },
-
-  {
-    "title": "Hunger games The Fellowship of the Ring.",
-    "text": "A game of life an death"
-  }
-];
-class invertedIndex {
+class InvertedIndex {
 
   constructor() {
     this.indices = [];
@@ -30,7 +12,8 @@ class invertedIndex {
       .split(/\s+/);
   }
 
-  createIndex(fileName, content) {
+  createIndex(filePath) {
+    let content = books;
     const result = {};
     let doc = 1;
     content.forEach(book => {
@@ -47,17 +30,18 @@ class invertedIndex {
         });
       }
       doc++;
+
     });
-    this.indices[fileName] = result;
+    this.indices[filePath] = result;
   }
 
-  getIndex(fileName) {
-    return this.indices[fileName];
+  getIndex(filePath) {
+    return this.indices[filePath];
   }
 
-  searchIndex(fileName, query) {
+  searchIndex(filePath, query) {
     const result = {};
-    const indexedFile = this.getIndex(fileName);
+    const indexedFile = this.getIndex(filePath);
     if (!query || !indexedFile) {
       return "file dose not exist";
     }
@@ -69,8 +53,6 @@ class invertedIndex {
     return result;
   }
 }
-const indexer = new invertedIndex();
-indexer.createIndex('book', books);
-indexer.createIndex('bookTwo', bookTwo);
-indexer.getIndex('book', books);
-console.log(indexer.searchIndex('book', "Alice"));
+
+
+module.exports = new InvertedIndex();
