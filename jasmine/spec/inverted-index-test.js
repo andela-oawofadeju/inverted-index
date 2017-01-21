@@ -1,4 +1,4 @@
-const indexer = require('../../src/Inverted-index');
+const indexer = require('../../src/inverted-index');
 
 
 describe('Inverted Index Tests', function() {
