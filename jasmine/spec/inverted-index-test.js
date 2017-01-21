@@ -1,39 +1,42 @@
 describe('Inverted Index Tests', function() {
-  var invertedIndex = new Index();
-  var sourceFile = './books.json';
-  var filePath;
+  const indexer = new invertedIndex();
+  let fileName = './books.json';
+  let content;
 
   beforeEach(function(done) {
-    invertedIndex.createIndex(sourceFile).done(function(data) {
-      invertedIndex.parsedJSON = data;
-      filePath = invertedIndex.getFile(sourceFile);
-
-      //invoke jasmine's done callback
-      done();
-    });
+    indexer.createIndex(fileName);
+    done();
   });
 
+
   describe('Read book data', function() {
+    it('asserts that the file content is actually a valid JSON Array', function() {
+      expect(indexer.createIndex).toBeDefined();
+    });
     it('asserts that json file is not empty', function() {
-      expect(invertedIndex.content).not.toEqual([]);
+      expect(indexer.createIndex).not.toEqual([]);
     });
   });
 
   describe('Populate index', function() {
+    it('ensures that the index is correct', function() {
+      expect(indexer.getIndex.length).not.toBe(null);
+    });
+
     it('verifies that the index is created once the JSON file has been read', function() {
-      expect(invertedIndex.readIndex).toBeDefined();
-      expect(invertedIndex.readIndex.length).not.toBe(null);
+      expect(indexer.getIndex).toBeDefined();
     });
 
     it('index maps the string keys to the correct objects in the JSON array', function() {
-      expect(invertedIndex.index.alice).toEqual([]);
-      expect(invertedIndex.index.ring).toEqual([]);
+      expect(indexer.searchIndex.alice).toEqual([1, 2]);
+      expect(indexer.searchIndex.ring).toEqual([]);
     });
   });
   describe('Search Index', function() {
     it('verifies that searching the index returns an array of the indices of the correct objects', function() {
-      expect(invertedIndex.searchIndex('alice').alice).toEqual([]);
-      expect(invertedIndex.searchIndex('rings').ring).toEqual([]);
+      expect(indexer.searchIndex('alice').alice).toEqual([1, 2]);
+      expect(indexer.searchIndex('ring').ring).toEqual([2]);
     });
+
   });
 });
