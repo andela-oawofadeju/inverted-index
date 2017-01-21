@@ -1,7 +1,8 @@
+const indexer = require('../../src/Inverted-index');
+
+
 describe('Inverted Index Tests', function() {
-  const indexer = new invertedIndex();
   let fileName = './books.json';
-  let content;
 
   beforeEach(function(done) {
     indexer.createIndex(fileName);
@@ -28,14 +29,14 @@ describe('Inverted Index Tests', function() {
     });
 
     it('index maps the string keys to the correct objects in the JSON array', function() {
-      expect(indexer.searchIndex.alice).toEqual([1, 2]);
-      expect(indexer.searchIndex.ring).toEqual([]);
+      expect(indexer.searchIndex(fileName, 'alice').alice).toEqual([1]);
+      expect(indexer.searchIndex(fileName, 'ring').ring).toEqual([2]);
     });
   });
   describe('Search Index', function() {
     it('verifies that searching the index returns an array of the indices of the correct objects', function() {
-      expect(indexer.searchIndex('alice').alice).toEqual([1, 2]);
-      expect(indexer.searchIndex('ring').ring).toEqual([2]);
+      expect(indexer.searchIndex(fileName, 'alice').alice).toEqual([1]);
+      expect(indexer.searchIndex(fileName, 'ring').ring).toEqual([2]);
     });
 
   });
