@@ -25,6 +25,7 @@
    font-size: 14px;
    background-color: white;
    background-image: url('searchicon.png');
+   padding: -5px 10px 10px 10px;
    background-position: 10px 10px;
    background-repeat: no-repeat;
    -webkit-transition: width 0.4s ease-in-out;
