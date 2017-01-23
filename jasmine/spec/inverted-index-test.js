@@ -1,9 +1,8 @@
-const indexer = require('../../src/inverted-index');
 
 
 describe('Inverted Index Tests', function() {
   let fileName = './books.json';
-
+  let indexer = new InvertedIndex();
   beforeEach(function(done) {
     indexer.createIndex(fileName);
     done();
