@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="InvertedIndex" ng-controller="InvertedIndexController as indexer">
 
 <head>
   <title>Inverted Index Project</title>
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/bootstrap-theme.css">
-  <script type="text/javascript" src="js/bootstrap.js"></script>
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="file.css">
 </head>
 
 <body>
-  <div>
-    <form class="form-control">
-      <nav class="navigate navbar-form">
-        <h3>Inverted Index</h3></nav>
+  <nav class="navigate navbar-form">
+    <h3>{{ indexer.title }}</h3>
+  </nav>
+  <div class="col-md-6">
+    <form class="form-control" enctype="multipart/form-data">
       <br>
       <fieldset>
         <legend>
@@ -22,18 +21,40 @@
           <br>
         </legend>
         <label for="file">Upload file</label>
-        <input class="text" type="file" name="fileToUpload" value="upload file">
+        <input class="text" type="file" file-upload="file" placeholder="upload file">
         <br>
         <br>
         <label for="create">Create Index</label>
-        <input class="text" type="text" name="create">
-        <input class="btn-group" type="button" name="create" value="create">
+        <input class="btn-group" type="button" value="Create Index" ng-click="indexer.uploadFile()">
         <br>
         <br>
         <label for="search">Search Index</label>
         <input type="text" name="search" placeholder="Search Index">
-        <input class="btn-group" type="button" name="search" value="search">
+        <input class="btn-group" type="button" name="search" value="search" ng-click="indexer.search()">
       </fieldset>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <table class="table table-bordered">
+      <thead class="thead-inverse">
+        <tr>
+          <th>words</th>
+          <th ng-repeat="3 in [] | range:indexer.count"> doc_{{ number }}</th>
+        </tr>
+      </thead>
+      <tr ng-repeat="(key, values) in data.data track by $index">
+        <td> {{ key }}</td>
+        <td ng-repeat="number in [] | range:data.count">
+          <span ng-if="values.includes(number)"> <i class="fa fa-check" aria-hidden="true"></i></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <script src="../lib/angular/angular.js"></script>
+  <script src="./app.js"></script>
+  <script src="./inverted-index.js"></script>
+  <script src="./app.controller.js"></script>
+  <script src="./fileupload.directive.js"></script>
 </body>
 
 </html>
