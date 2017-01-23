@@ -1,4 +1,13 @@
-const books = require('./books.js').books;
+const books = [{
+    "title": "Alice in Wonderland",
+    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
+  },
+
+  {
+    "title": "The Lord of the Rings: The Fellowship of the Ring.",
+    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
+  }
+];
 
 class InvertedIndex {
 
@@ -12,8 +21,7 @@ class InvertedIndex {
       .split(/\s+/);
   }
 
-  createIndex(filePath) {
-    let content = books;
+  createIndex(filePath, content) {
     const result = {};
     let doc = 1;
     content.forEach(book => {
@@ -30,9 +38,12 @@ class InvertedIndex {
         });
       }
       doc++;
-
     });
-    this.indices[filePath] = result;
+    const returnResult = {
+      terms: result,
+      count: content.length
+    };
+    this.indices[filePath] = returnResult;
   }
 
   getIndex(filePath) {
@@ -43,7 +54,7 @@ class InvertedIndex {
     const result = {};
     const indexedFile = this.getIndex(filePath);
     if (!query || !indexedFile) {
-      return "file dose not exist";
+      return "file does not exist";
     }
     this.tokenizer(query).forEach(word => {
       if (indexedFile.hasOwnProperty(word)) {
@@ -52,7 +63,8 @@ class InvertedIndex {
     });
     return result;
   }
+
+  test() {
+    return 'test passed';
+  }
 }
-
-
-module.exports = new InvertedIndex();
