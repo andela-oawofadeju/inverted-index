@@ -57,14 +57,23 @@ class InvertedIndex {
       return "file does not exist";
     }
     this.tokenizer(query).forEach(word => {
-      if (indexedFile.hasOwnProperty(word)) {
-        result[word] = indexedFile[word];
+      if (indexedFile.terms.hasOwnProperty(word)) {
+        result[word] = indexedFile.terms[word];
       }
     });
-    return result;
+    const returnResult = {
+      terms: result,
+      count: indexedFile.count
+    };
+    return returnResult;
   }
 
   test() {
     return 'test passed';
   }
 }
+
+
+var n = new InvertedIndex();
+n.createIndex("book", books);
+console.log(n.searchIndex("book", "Alice"));

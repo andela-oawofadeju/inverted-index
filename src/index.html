@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/bootstrap-theme.css">
   <link rel="stylesheet" href="file.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 </head>
 
 <body>
@@ -29,22 +30,26 @@
         <br>
         <br>
         <label for="search">Search Index</label>
-        <input type="text" name="search" placeholder="Search Index">
+        <input type="text" name="search" placeholder="Search Index" id="search">
         <input class="btn-group" type="button" name="search" value="search" ng-click="indexer.search()">
       </fieldset>
     </form>
   </div>
   <div class="col-md-6">
+    <!-- <div class="form-group">
+  <input type="text" name="" class="form-control">
+</div>
+ -->
     <table class="table table-bordered">
       <thead class="thead-inverse">
         <tr>
           <th>words</th>
-          <th ng-repeat="3 in [] | range:indexer.count"> doc_{{ number }}</th>
+          <th ng-repeat="number in [] | range:indexer.count"> doc_{{ number }}</th>
         </tr>
       </thead>
-      <tr ng-repeat="(key, values) in data.data track by $index">
+      <tr ng-repeat="(key, values) in indexer.index.terms track by $index">
         <td> {{ key }}</td>
-        <td ng-repeat="number in [] | range:data.count">
+        <td ng-repeat="number in [] | range:indexer.count">
           <span ng-if="values.includes(number)"> <i class="fa fa-check" aria-hidden="true"></i></span>
         </td>
       </tr>

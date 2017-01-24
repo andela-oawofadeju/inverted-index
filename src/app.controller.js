@@ -18,6 +18,7 @@
     const vm = this;
     vm.title = 'Indexer Checkpoint Project';
     vm.file = null;
+    vm.index = null;
     vm.indexer = new InvertedIndex();
     vm.create = () => {
       let result = vm.indexer.test();
@@ -30,6 +31,15 @@
       alert(result);
     };
 
+    vm.search = () => {
+
+      const query = document.getElementById('search').value;
+      console.log(vm.file, query);
+      const result = vm.indexer.searchIndex(vm.file, query);
+      console.log(result);
+      vm.index = result;
+    };
+
     vm.uploadFile = function() {
       let file = $scope.file;
       console.log(file);
@@ -38,7 +48,9 @@
       reader.onload = (event) => {
         try {
           const content = JSON.parse(event.target.result);
+          // $scope.$apply(() => {
           vm.processFile(file.name, content);
+          // });
         } catch (e) {
           console.log('An error occured', e.message);
         }
@@ -47,10 +59,13 @@
     };
 
     vm.processFile = (fileName, content) => {
-      vm.indexer.createIndex(fileName, content);
-      let result = vm.indexer.getIndex(fileName);
-      console.log(result);
-      vm.count = result.count;
+      $scope.$apply(() => {
+        vm.file = fileName;
+        vm.indexer.createIndex(fileName, content);
+        vm.index = vm.indexer.getIndex(fileName);
+        console.log(vm.index);
+        vm.count = vm.index.count;
+      });
     };
   }
 }());
