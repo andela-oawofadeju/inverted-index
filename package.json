@@ -21,7 +21,7 @@
     "karma-jasmine": "^1.1.0"
   },
   "scripts": {
-    "test": " jasmine ./jasmine/spec/inverted-index-test.js",
+    "test": "./node_modules/karma/bin/karma start karma.conf.js --single-run",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
