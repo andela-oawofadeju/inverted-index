@@ -1,32 +1,50 @@
-const books = [{
+var books = [{
+  title: "THis is the First book",
+  text: "This is all the texts in the first book"
+}, {
+  title: "This is the second book",
+  text: "This is the day that the Lord has made I will be glad"
+}];
+
+var bookTwo = [{
     "title": "Alice in Wonderland",
-    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
+    "text": "and enters a world full of imagination.",
   },
 
   {
-    "title": "The Lord of the Rings: The Fellowship of the Ring.",
-    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
+    "title": "Hunger games The Fellowship of the Ring.",
+    "text": "A game of life an death"
   }
 ];
-
+/**
+ * @class InvertedIndex
+ */
 class InvertedIndex {
-
+  /**
+   * @constructor
+   */
   constructor() {
     this.indices = [];
   }
 
+  /**
+   * A tokenizer method
+   */
   tokenizer(string) {
-    return string.replace(/[^a-z\d\s]/ig, '')
-      .toLowerCase()
-      .split(/\s+/);
-  }
-
+      return string.trim().replace(/[^a-z\d\s]/ig, '').toLowerCase().split(/\s+/);
+    }
+    /**
+     * A createIndex method
+     * It takes in the filePath and the contents of the filePath
+     * @param {Object} filePath
+     * @param {Object} content
+     * @returns {Object} Returns object containing index
+     */
   createIndex(filePath, content) {
     const result = {};
     let doc = 1;
     content.forEach(book => {
       for (let key in book) {
-        // console.log(this.tokenizer(book[key]))
         this.tokenizer(book[key]).forEach(word => {
           if (!result.hasOwnProperty(word)) {
             result[word] = [];
@@ -44,17 +62,30 @@ class InvertedIndex {
       count: content.length
     };
     this.indices[filePath] = returnResult;
+    console.log(this.indices);
   }
 
+  /**
+   * GetIndex
+   * Gets the index of the files uploaded
+   * @param {any} filename
+   * @returns {any} void
+   */
   getIndex(filePath) {
     return this.indices[filePath];
   }
 
+  /**
+   * Search index method
+   * @param {String} filePath word(s) or terms to search for
+   *  * @param {String} query
+   * @returns {Object} Returns result of searched index.
+   */
   searchIndex(filePath, query) {
     const result = {};
     const indexedFile = this.getIndex(filePath);
     if (!query || !indexedFile) {
-      return "file does not exist";
+      return 'file does not exist';
     }
     this.tokenizer(query).forEach(word => {
       if (indexedFile.terms.hasOwnProperty(word)) {
@@ -67,13 +98,44 @@ class InvertedIndex {
     };
     return returnResult;
   }
-
   test() {
     return 'test passed';
   }
+
+
+  /**
+   * validateFile a method to validate json file
+   * @param {Object} content
+   * @returns {Array} Returns message in Json format.
+   */
+
+  validateFile(content) {
+    const fileName = this.indices;
+    let status = true;
+    if (typeof content !== 'object' || content.length === 0) {
+      const returnResult = {
+        status: false,
+        msg: 'Invalid Json File!'
+      };
+      return returnResult;
+    }
+
+    try {
+      this.content.forEach((book) => {
+        const bookTitle = Object.hasOwnProperty.call(book, 'title');
+        const bookText = Object.hasOwnProperty.call(book, 'text');
+        if (!(bookTitle && bookText)) {
+          return { status: false };
+        }
+      });
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
 }
-
-
-var n = new InvertedIndex();
-n.createIndex("book", books);
-console.log(n.searchIndex("book", "Alice"));
+const indexer = new InvertedIndex();
+indexer.createIndex('book', books);
+indexer.createIndex('bookTwo', bookTwo);
+indexer.getIndex('book', books);
+indexer.searchIndex('book', "Alice");

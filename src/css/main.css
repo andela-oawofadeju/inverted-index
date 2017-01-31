@@ -1,0 +1,23 @@
+nav{
+  background-color: #233237;
+  font-size: 20px;
+  font-weight: 20px;
+  margin:0;
+  padding:10px;
+}
+body{
+  background-color:#E9E9E9;
+}
+span{
+  color:#233237;
+}
+.btn{
+  background-color: #233237;
+}
+
+.footer{
+  background-color: #233237;
+}
+.footer-copyright{
+  color: #ffffff;
+}

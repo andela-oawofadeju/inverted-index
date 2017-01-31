@@ -13,12 +13,6 @@
   <nav class="navigate navbar-form">
     <h3>{{ indexer.title }}</h3>
   </nav>
-  <div class="drop-down">
-    <select ng-model="searchFile">
-      <option value="">-- All --</option>
-      <option ng-model="searchFile" value="{{fileName}}" ng-repeat="(fileName, content) in indexedFiles">{{fileName}}</option>
-    </select>
-  </div>
   <div class="col-md-6">
     <form class="form-control" enctype="multipart/form-data">
       <fieldset>
