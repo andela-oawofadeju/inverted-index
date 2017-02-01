@@ -1,12 +1,15 @@
+// const indexer = require('../src/js/inverted-index.js');
 const invertedIndex = new InvertedIndex();
-const validbook = require('../books.json');
-const emptyBook = require('../books copy.json');
-const invalidBook = require('../books copy2.json');
+const fs = require('fs');
+const validbook = fs.readFileSync('../books.json');
+const emptyBook = fs.readFileSync('../books copy.json');
+const invalidBook = fs.readFileSync('../books copy 2.json');
+
 
 
 // this is test suite
 describe('Read book data', () => {
-  it('Should return false for empty json file', () => {
+  it('Should return false for empty json array', () => {
     expect(invertedIndex.validateFile(emptyBook).status).toEqual(false);
   });
 
