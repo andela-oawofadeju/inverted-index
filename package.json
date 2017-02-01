@@ -28,7 +28,8 @@
   },
   "scripts": {
     "test": "./node_modules/karma/bin/karma start karma.conf.js --single-run",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
