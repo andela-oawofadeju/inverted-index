@@ -18,12 +18,15 @@ angular.module('InvertedIndex')
                 try {
                   scope.$apply(() => {
                     const content = JSON.parse(event.target.result);
+                    scope.indexer.indexer.allBooks = scope.indexer.indexer.allBooks.concat(content);
                     scope.files[fileName] = content;
                     scope.fileNames.push(fileName);
                   });
                 } catch (e) {
                   console.log('An error occured', e.message);
                 }
+
+                scope.indexer.indexer.createIndex();
               };
               if (scope.rawFile[i].type === 'application/json') {
                 reader.readAsText(scope.rawFile[i]);

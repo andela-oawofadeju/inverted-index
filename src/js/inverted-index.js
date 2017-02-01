@@ -7,7 +7,17 @@ class InvertedIndex {
    */
   constructor() {
     this.indices = [];
+    this.allBooks = [];
   }
+
+  /**
+  * [
+      {
+        
+      }
+
+    ]
+  */
 
   /**
    * A tokenizer method
@@ -24,27 +34,34 @@ class InvertedIndex {
      */
   createIndex(filePath, content) {
     const result = {};
-    let doc = 1;
-    content.forEach(book => {
+    if (!filePath) {
+      content = this.allBooks;
+    }
+
+    content.forEach((book, doc) => {
       for (let key in book) {
         this.tokenizer(book[key]).forEach(word => {
           if (!result.hasOwnProperty(word)) {
             result[word] = [];
           }
-          if (result[word].indexOf(doc) > -1) {
+          if (result[word].indexOf(doc + 1) > -1) {
             return;
           }
-          result[word].push(doc);
+          result[word].push(doc + 1);
         });
       }
-      doc++;
     });
     const returnResult = {
       terms: result,
       count: content.length
     };
-    this.indices[filePath] = returnResult;
-    console.log(this.indices);
+
+    if (filePath) {
+      this.indices[filePath] = returnResult;
+    } else {
+      this.fullIndex = returnResult;
+    }
+    // console.log(this);
   }
 
   /**
@@ -65,7 +82,13 @@ class InvertedIndex {
    */
   searchIndex(filePath, query) {
     const result = {};
-    const indexedFile = this.getIndex(filePath);
+    let indexedFile;
+    if (filePath) {
+      indexedFile = this.getIndex(filePath);
+    } else {
+      indexedFile = this.fullIndex;
+    }
+
     if (!query || !indexedFile) {
       return 'file does not exist';
     }
