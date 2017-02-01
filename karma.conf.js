@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Tue Nov 15 2016 01:52:35 GMT+0100 (WAT)
 
-module.exports = function (config) {
+module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -15,8 +15,8 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/inverted-index.js',
-      'jasmine/spec/inverted-index-test.js'
+      'build/inverted-index.js',
+      'build/inverted-index-test.js'
     ],
 
 
