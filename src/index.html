@@ -1,64 +1,100 @@
 <!DOCTYPE html>
-<html ng-app="InvertedIndex" ng-controller="InvertedIndexController as indexer">
+<html ng-app="InvertedIndex">
 
 <head>
-  <title>Inverted Index Project</title>
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/bootstrap-theme.css">
-  <link rel="stylesheet" href="file.css">
+  <title>Inverted Index</title>
+  <link type="text/css" rel="stylesheet" href="src/css/bootstrap.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="src/css/bootstrap-theme.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="src/css/main.css" media="screen,projection" />
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 </head>
 
-<body>
-  <nav class="navigate navbar-form">
-    <h3>{{ indexer.title }}</h3>
+<body class="container" ng-controller="InvertedIndexController as indexer">
+  <nav>
+    <div class="nav-wrapper grey-text text-lighten-4">
+      {{ indexer.title }}
+    </div>
   </nav>
-  <div class="col-md-6">
-    <form class="form-control" enctype="multipart/form-data">
-      <fieldset>
-        <legend>
-          <p>Please select your options</p>
-        </legend>
-        <br>
-        <label for="file">Upload file</label>
-        <input class="text" type="file" file-upload="file" placeholder="upload file">
-        <br>
-        <br>
-        <label for="create">Create Index</label>
-        <input class="btn-group" type="button" value="Create Index" ng-click="indexer.uploadFile()">
-        <br>
-        <br>
-        <label for="search">Search Index</label>
-        <input type="text" name="search" placeholder="Search Index" id="search">
-        <input class="btn-group" type="button" name="search" value="search" ng-click="indexer.search()">
-      </fieldset>
-    </form>
+  <fieldset>
+    <div class="container">
+      <div class="row col-sm-4">
+        <div class="option-align">
+          <p>Inverted Index web application gets the indexes of an array of words in a JSON file and allows a user to search for each word or array of words in a file or multiple files.
+          </p>
+        </div>
+      </div>
+      <div class="row col-sm-4">
+        <div class="option-align">
+          <span>STEP 1: Upload one or more JSON Files</span>
+          <div class="btn">
+            <input type="file" file-upload multiple>
+          </div>
+          <div>
+            <select id="select-file" ng-model="selectedFile" name="files browser-default input-field">
+              <option value="allFiles" selected="">Choose your option</option>
+              <option ng-repeat="fileName in fileNames" value="{{fileName}}">{{ fileName }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row col-sm-4">
+        <div class="option-align">
+          <span>STEP 2: Create Index for Selected File(s)</span>
+          <div>
+            <button class="btn" ng-click="indexer.create()">Create Index</button>
+          </div>
+        </div>
+      </div>
+  </fieldset>
   </div>
-  <div class="col-md-6">
-    <!-- <div class="form-group">
-  <input type="text" name="" class="form-control">
-</div>
- -->
-    <table class="table table-bordered">
-      <thead class="thead-inverse">
-        <tr>
-          <th>words</th>
-          <th ng-repeat="number in [] | range:indexer.count"> doc_{{ number }}</th>
-        </tr>
-      </thead>
-      <tr ng-repeat="(key, values) in indexer.index.terms track by $index">
-        <td> {{ key }}</td>
-        <td ng-repeat="number in [] | range:indexer.count">
-          <span ng-if="values.includes(number)"> <i class="fa fa-check" aria-hidden="true"></i></span>
-        </td>
+  <div class="row col-sm-4">
+    <div class="option-align">
+      <span>STEP 3: Search for word(s) or term(s)</span>
+      <div class="input-field step-a">
+        <input id="search" type="search" required ng-model="indexer.query" ng-change="indexer.search(indexer.query)">
+        <label class="label-icon search-word" for="search"><i class="material-icons">search</i></label>
+      </div>
+    </div>
+  </div>
+  </div>
+  <br>
+  <table class="table table-bordered">
+    <thead class="thead-inverse">
+      <tr>
+        <th>words</th>
+        <th ng-repeat="number in [] | range:indexer.index.count"> doc_{{ number }}</th>
       </tr>
-    </table>
+    </thead>
+    <tr ng-repeat="(key, values) in indexer.index.terms track by $index">
+      <td> {{ key }}</td>
+      <td ng-repeat="number in [] | range:indexer.index.count">
+        <span ng-if="values.includes(number)"> <i class="fa fa-check" style="color: green" aria-hidden="true"></i></span>
+        <span ng-if="!values.includes(number)"> <i class="fa fa-close" style="color: red" aria-hidden="true"></i></span>
+      </td>
+    </tr>
+  </table>
   </div>
-  <script src="../lib/angular/angular.js"></script>
-  <script src="./app.js"></script>
-  <script src="./inverted-index.js"></script>
-  <script src="./app.controller.js"></script>
-  <script src="./fileupload.directive.js"></script>
+  </form>
+  <script src="lib/angular/angular.js"></script>
+  <script src="src/js/inverted-index.js"></script>
+  <script src="src/js/app.controller.js"></script>
+  <script src="src/js/fileupload.directive.js"></script>
+  </div>
 </body>
+</div>
+<br>
+<br>
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="white-text"></h5>
+        <p class="grey-text text-lighten-4">Inverted Index</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    © 2017 Awofadeju Olayemi
+</footer>
 
 </html>

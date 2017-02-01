@@ -1,42 +1,62 @@
+// const indexer = require('../src/js/inverted-index.js');
+const invertedIndex = new InvertedIndex();
+const fs = require('fs');
+const validbook = fs.readFileSync('../books.json');
+const emptyBook = fs.readFileSync('../books copy.json');
+const invalidBook = fs.readFileSync('../books copy 2.json');
 
 
-describe('Inverted Index Tests', function() {
-  let fileName = './books.json';
-  let indexer = new InvertedIndex();
-  beforeEach(function(done) {
-    indexer.createIndex(fileName);
-    done();
+
+// this is test suite
+describe('Read book data', () => {
+  it('Should return false for empty json array', () => {
+    expect(invertedIndex.validateFile(emptyBook).status).toEqual(false);
   });
 
-
-  describe('Read book data', function() {
-    it('asserts that the file content is actually a valid JSON Array', function() {
-      expect(indexer.createIndex).toBeDefined();
-    });
-    it('asserts that json file is not empty', function() {
-      expect(indexer.createIndex).not.toEqual([]);
-    });
+  it('Should return true for valid json file', () => {
+    expect(invertedIndex.validateFile(validbook).status).toEqual(true);
   });
 
-  describe('Populate index', function() {
-    it('ensures that the index is correct', function() {
-      expect(indexer.getIndex.length).not.toBe(null);
-    });
+  it('Should return false if json does not contain title abd text', () => {
+    expect(invertedIndex.validateFile(invalidBook).status).toEqual(false);
+  });
+});
 
-    it('verifies that the index is created once the JSON file has been read', function() {
-      expect(indexer.getIndex).toBeDefined();
+describe('Populate Index', () => {
+  it('Should ensure that index is created once the file has been read', () => {
+    expect(invertedIndex.createIndex('books.json', books)).toBeDefined();
+  });
+  it('Should maps the string keys to the correct objects', () => {
+    expect(invertedIndex.getIndex('books.json').alice).toEqual([0]);
+  });
+  it('Should return an object that is an accurate index of the content of the json file',
+    () => {
+      expect(invertedIndex.getIndex()).toBeDefined();
     });
+});
 
-    it('index maps the string keys to the correct objects in the JSON array', function() {
-      expect(indexer.searchIndex(fileName, 'alice').alice).toEqual([1]);
-      expect(indexer.searchIndex(fileName, 'ring').ring).toEqual([2]);
+describe('Search Index', () => {
+  it('Should return correct index of the search term', () => {
+    expect(invertedIndex.searchIndex('alice, a')).toEqual({
+      'books.json': {
+        alice: [0],
+        a: [0, 1]
+      }
     });
   });
-  describe('Search Index', function() {
-    it('verifies that searching the index returns an array of the indices of the correct objects', function() {
-      expect(indexer.searchIndex(fileName, 'alice').alice).toEqual([1]);
-      expect(indexer.searchIndex(fileName, 'ring').ring).toEqual([2]);
+  it('Should return books.json:{} when no result is found',
+    () => {
+      expect(invertedIndex.searchIndex('along', invertedIndex.getIndex()[0])).toEqual({
+        'books.json': {}
+      });
     });
-
+  it('Should return correct index in an array search terms', () => {
+    expect(invertedIndex.searchIndex('alice, [hole,[a]]')).toEqual({
+      'books.json': {
+        alice: [0],
+        hole: [0],
+        a: [0, 1]
+      }
+    });
   });
 });
