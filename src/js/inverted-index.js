@@ -11,15 +11,6 @@ class InvertedIndex {
   }
 
   /**
-  * [
-      {
-        
-      }
-
-    ]
-  */
-
-  /**
    * A tokenizer method
    */
   tokenizer(string) {
@@ -139,3 +130,5 @@ class InvertedIndex {
     }
   }
 }
+
+module.exports = InvertedIndex;

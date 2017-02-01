@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="InvertedIndex" ng-controller="InvertedIndexController as indexer">
+<html ng-app="InvertedIndex">
 
 <head>
   <title>Inverted Index</title>
@@ -9,7 +9,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 </head>
 
-<body>
+<body class="container" ng-controller="InvertedIndexController as indexer">
   <nav>
     <div class="nav-wrapper grey-text text-lighten-4">
       {{ indexer.title }}
@@ -30,8 +30,8 @@
             <input type="file" file-upload multiple>
           </div>
           <div>
-            <select id="select-file" name="files browser-default input-field">
-              <option value="">Choose your option</option>
+            <select id="select-file" ng-model="selectedFile" name="files browser-default input-field">
+              <option value="allFiles" selected="">Choose your option</option>
               <option ng-repeat="fileName in fileNames" value="{{fileName}}">{{ fileName }}</option>
             </select>
           </div>
@@ -68,7 +68,8 @@
     <tr ng-repeat="(key, values) in indexer.index.terms track by $index">
       <td> {{ key }}</td>
       <td ng-repeat="number in [] | range:indexer.index.count">
-        <span ng-if="values.includes(number)"> <i class="fa fa-check" aria-hidden="true"></i></span>
+        <span ng-if="values.includes(number)"> <i class="fa fa-check" style="color: green" aria-hidden="true"></i></span>
+        <span ng-if="!values.includes(number)"> <i class="fa fa-close" style="color: red" aria-hidden="true"></i></span>
       </td>
     </tr>
   </table>
