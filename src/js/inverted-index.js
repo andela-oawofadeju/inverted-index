@@ -1,21 +1,3 @@
-var books = [{
-  title: "THis is the First book",
-  text: "This is all the texts in the first book"
-}, {
-  title: "This is the second book",
-  text: "This is the day that the Lord has made I will be glad"
-}];
-
-var bookTwo = [{
-    "title": "Alice in Wonderland",
-    "text": "and enters a world full of imagination.",
-  },
-
-  {
-    "title": "Hunger games The Fellowship of the Ring.",
-    "text": "A game of life an death"
-  }
-];
 /**
  * @class InvertedIndex
  */
@@ -134,8 +116,3 @@ class InvertedIndex {
     }
   }
 }
-const indexer = new InvertedIndex();
-indexer.createIndex('book', books);
-indexer.createIndex('bookTwo', bookTwo);
-indexer.getIndex('book', books);
-indexer.searchIndex('book', "Alice");

@@ -1,5 +1,5 @@
 (function() {
-  angular.module('InvertedIndex')
+  angular.module('InvertedIndex', [])
     .filter('range', () => {
       return (input, number) => {
         for (let i = 1; parseInt(number) >= i; i++) {
@@ -23,27 +23,35 @@
     $scope.files = {};
     $scope.fileNames = [];
     $scope.fileSearch = null;
+    $scope.allFiles = {};
+
+    // vm.create = () => {
+    //   let result = vm.indexer.test();
+    //   alert(result);
+    // };
 
     vm.create = () => {
-      let result = vm.indexer.test();
-      alert(result);
-    };
-
-    vm.create = (fileName) => {
+      const fileName = document.getElementById('select-file').value;
       $scope.fileSearch = fileName;
+      vm.file = fileName;
       console.log(fileName);
       console.log($scope.files[fileName]);
       vm.indexer.createIndex(fileName, $scope.files[fileName]);
       vm.index = vm.indexer.getIndex(fileName);
       console.log(vm.index);
+      vm.showSearch = false;
+      vm.showIndex = true;
     };
 
-    vm.search = () => {
-      const query = document.getElementById('search').value;
+    vm.search = (query) => {
+      // const query = document.getElementById('search').value;
       console.log(vm.file, query);
       const result = vm.indexer.searchIndex($scope.fileSearch, query);
       console.log(result);
       vm.index = result;
+      console.log('showsIndex:', vm.index);
+      vm.showSearch = true;
+      vm.showIndex = false;
     };
 
     vm.uploadFile = function() {
