@@ -52,7 +52,6 @@ class InvertedIndex {
     } else {
       this.fullIndex = returnResult;
     }
-    // console.log(this);
   }
 
   /**
@@ -94,10 +93,6 @@ class InvertedIndex {
     };
     return returnResult;
   }
-  test() {
-    return 'test passed';
-  }
-
 
   /**
    * validateFile a method to validate json file
@@ -106,14 +101,10 @@ class InvertedIndex {
    */
 
   validateFile(content) {
-    // const returnValue =
     const fileName = this.indices;
     let status = true;
     if (typeof content !== 'object' || content.length === 0) {
-      // const returnResult = {
-      //   status: false,
-      //   msg: 'Invalid Json File!'
-      // };
+
       return false;
     }
 

@@ -24,20 +24,12 @@
     $scope.fileSearch = null;
     $scope.allFiles = {};
 
-    // vm.create = () => {
-    //   let result = vm.indexer.test();
-    //   alert(result);
-    // };
-
     vm.create = () => {
       const fileName = document.getElementById('select-file').value;
       $scope.fileSearch = fileName;
       vm.file = fileName;
-      // console.log(fileName);
-      // console.log($scope.files[fileName]);
       vm.indexer.createIndex(fileName, $scope.files[fileName]);
       vm.index = vm.indexer.getIndex(fileName);
-      // console.log(vm.index);
       vm.showSearch = false;
       vm.showIndex = true;
     };
