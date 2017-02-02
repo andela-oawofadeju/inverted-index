@@ -14,7 +14,7 @@ class InvertedIndex {
    * A tokenizer method
    */
   tokenizer(string) {
-      return string.trim().replace(/[^a-z\d\s]/ig, '').toLowerCase().split(/\s+/);
+      return string.replace(/[^a-z\d\s]/ig, ' ').trim().toLowerCase().split(/\s+/);
     }
     /**
      * A createIndex method
@@ -106,22 +106,23 @@ class InvertedIndex {
    */
 
   validateFile(content) {
+    // const returnValue =
     const fileName = this.indices;
     let status = true;
     if (typeof content !== 'object' || content.length === 0) {
-      const returnResult = {
-        status: false,
-        msg: 'Invalid Json File!'
-      };
-      return returnResult;
+      // const returnResult = {
+      //   status: false,
+      //   msg: 'Invalid Json File!'
+      // };
+      return false;
     }
 
     try {
-      this.content.forEach((book) => {
+      content.forEach((book) => {
         const bookTitle = Object.hasOwnProperty.call(book, 'title');
         const bookText = Object.hasOwnProperty.call(book, 'text');
         if (!(bookTitle && bookText)) {
-          return { status: false };
+          throw new Error("Invalid book");
         }
       });
       return true;
@@ -130,5 +131,3 @@ class InvertedIndex {
     }
   }
 }
-
-module.exports = InvertedIndex;

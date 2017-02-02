@@ -3,13 +3,13 @@
 
 <head>
   <title>Inverted Index</title>
-  <link type="text/css" rel="stylesheet" href="src/css/bootstrap.css" media="screen,projection" />
-  <link type="text/css" rel="stylesheet" href="src/css/bootstrap-theme.css" media="screen,projection" />
-  <link type="text/css" rel="stylesheet" href="src/css/main.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="css/bootstrap.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="css/bootstrap-theme.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="css/main.css" media="screen,projection" />
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 </head>
 
-<body class="container" ng-controller="InvertedIndexController as indexer">
+<body ng-controller="InvertedIndexController as indexer">
   <nav>
     <div class="nav-wrapper grey-text text-lighten-4">
       {{ indexer.title }}
@@ -31,7 +31,7 @@
           </div>
           <div>
             <select id="select-file" ng-model="selectedFile" name="files browser-default input-field">
-              <option value="allFiles" selected="">Choose your option</option>
+              <option value="allFiles" selected="">Choose all files</option>
               <option ng-repeat="fileName in fileNames" value="{{fileName}}">{{ fileName }}</option>
             </select>
           </div>
@@ -76,9 +76,9 @@
   </div>
   </form>
   <script src="lib/angular/angular.js"></script>
-  <script src="src/js/inverted-index.js"></script>
-  <script src="src/js/app.controller.js"></script>
-  <script src="src/js/fileupload.directive.js"></script>
+  <script src="js/inverted-index.js"></script>
+  <script src="js/app.controller.js"></script>
+  <script src="js/fileupload.directive.js"></script>
   </div>
 </body>
 </div>
