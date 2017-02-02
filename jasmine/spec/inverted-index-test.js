@@ -1,13 +1,7 @@
-// // const indexer = require('../src/js/inverted-index.js');
-// const index = require('../../src/js/inverted-index');
 const invertedIndex = new InvertedIndex();
-// const fs = require('fs');
-// const validbook = fs.readFileSync('../books.json');
-// const emptyBook = fs.readFileSync('../books copy.json');
-// const invalidBook = fs.readFileSync('../books copy 2.json');
-
 
 describe("Inverted Index", () => {
+
 
   beforeEach(() => {
     invertedIndex.createIndex('books.json', validBook);
@@ -40,6 +34,7 @@ describe("Inverted Index", () => {
         expect(invertedIndex.getIndex('books.json')).toBeDefined();
       });
   });
+
 
   describe('Search Index', () => {
     it('Should return correct index of the search term', () => {
