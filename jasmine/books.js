@@ -4,8 +4,7 @@
 // // const invalidBook = fs.readFileSync('../books copy 2.json');
 
 
-const validBook
- = [{
+const validBook = [{
     "title": "Alice in Wonderland",
     "text": "Alice falls into a rabbit hole and enters a world full of imagination."
   },
