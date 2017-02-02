@@ -11,6 +11,7 @@ angular.module('InvertedIndex')
         element.bind('change', function() {
           scope.$apply(function() {
             scope.rawFile = element[0].files;
+            console.log(element[0].files);
             for (var i = 0; i < scope.rawFile.length; i++) {
               const reader = new FileReader();
               const fileName = scope.rawFile[i]['name'];
