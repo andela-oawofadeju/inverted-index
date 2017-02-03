@@ -25,6 +25,7 @@ class InvertedIndex {
      */
   createIndex(filePath, content) {
     const result = {};
+    // store all json files uploaded in an array which is this.allBooks
     if (!filePath) {
       content = this.allBooks;
     }
