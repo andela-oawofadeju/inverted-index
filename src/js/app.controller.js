@@ -23,30 +23,52 @@
     $scope.fileNames = [];
     $scope.fileSearch = null;
     $scope.allFiles = {};
+    $scope.errorFileUploadMessage = false;
+    $scope.errorSearchMessage = false;
+    $scope.selectedFile = [];
+
 
     vm.create = () => {
-      const fileName = document.getElementById('select-file').value;
-      $scope.fileSearch = fileName;
-      vm.file = fileName;
-      vm.indexer.createIndex(fileName, $scope.files[fileName]);
-      vm.index = vm.indexer.getIndex(fileName);
-      vm.showSearch = false;
-      vm.showIndex = true;
+      if (Object.keys($scope.files).length === 0) {
+        //$scope.errorFileUploadMessage = true;
+        vm.showError("upload");
+      } else {
+        const fileName = document.getElementById('select-file').value;
+        $scope.fileSearch = fileName;
+        vm.file = fileName;
+        vm.indexer.createIndex(fileName, $scope.files[fileName]);
+        vm.index = vm.indexer.getIndex(fileName);
+        vm.showSearch = false;
+        vm.showIndex = true;
+      }
     };
 
-    vm.search = () => {
-      const query = document.getElementById('search').value;
-      let result;
-      if ($scope.selectedFile !== 'allFiles') {
-        result = vm.indexer.searchIndex($scope.selectedFile, query);
-      } else {
-        result = vm.indexer.searchIndex(null, query);
+
+    vm.showError = (type) => {
+      if (type === "upload") {
+        $scope.errorFileUploadMessage = true;
+      } else if (type === "search") {
+        $scope.errorSearchMessage = true;
       }
+    };
 
-      vm.index = result;
 
-      vm.showSearch = true;
-      vm.showIndex = false;
+
+
+    vm.search = (query) => {
+      if ($scope.selectedFile.length === 0) {
+        vm.showError("search");
+      } else {
+        let result;
+        if ($scope.selectedFile !== 'allFiles') {
+          result = vm.indexer.searchIndex($scope.selectedFile, query);
+        } else {
+          result = vm.indexer.searchIndex(null, query);
+        }
+        vm.index = result;
+        vm.showSearch = true;
+        vm.showIndex = false;
+      }
     };
 
     vm.uploadFile = function() {
@@ -61,7 +83,7 @@
               $scope.fileNames.push(fileName);
             });
           } catch (e) {
-            console.log('An error occured', e.message);
+            return ('An error occured', e.message);
           }
         };
         if ($scope.rawFile[i].type === 'application/json') {
@@ -75,7 +97,7 @@
         vm.file = fileName;
         vm.indexer.createIndex(fileName, content);
         vm.index = vm.indexer.getIndex(fileName);
-        console.log(vm.index);
+
         vm.count = vm.index.count;
       });
     };
