@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
-const jasmine = require('gulp-jasmine');
-const browserify = require('gulp-browserify');
+//const jasmine = require('gulp-jasmine');
+//const browserify = require('gulp-browserify');
 
 // Static server
 gulp.task('browser-sync', () => {
