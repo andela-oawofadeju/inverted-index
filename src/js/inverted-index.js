@@ -14,15 +14,17 @@ class InvertedIndex {
    * A tokenizer method
    */
   tokenizer(string) {
-      return string.replace(/[^a-z\d\s]/ig, ' ').trim().toLowerCase().split(/\s+/);
-    }
-    /**
-     * A createIndex method
-     * It takes in the filePath and the contents of the filePath
-     * @param {Object} filePath
-     * @param {Object} content
-     * @returns {Object} Returns object containing index
-     */
+    return string.replace(/[^a-z\d\s]/ig, ' ').trim().toLowerCase().split(/\s+/);
+  }
+
+  /**
+   * A createIndex method
+   * It takes in the filePath and the contents of the filePath
+   * @param {Object} filePath
+   * @param {Object} content
+   * @returns {Object} Returns object containing index
+   */
+
   createIndex(filePath, content) {
     const result = {};
     // store all json files uploaded in an array which is this.allBooks
@@ -31,8 +33,8 @@ class InvertedIndex {
     }
 
     content.forEach((book, doc) => {
-      for (let key in book) {
-        this.tokenizer(book[key]).forEach(word => {
+      for (const key in book) {
+        this.tokenizer(book[key]).forEach((word) => {
           if (!result.hasOwnProperty(word)) {
             result[word] = [];
           }
@@ -83,7 +85,7 @@ class InvertedIndex {
     if (!query || !indexedFile) {
       return 'file does not exist';
     }
-    this.tokenizer(query).forEach(word => {
+    this.tokenizer(query).forEach((word) => {
       if (indexedFile.terms.hasOwnProperty(word)) {
         result[word] = indexedFile.terms[word];
       }
@@ -102,10 +104,7 @@ class InvertedIndex {
    */
 
   validateFile(content) {
-    const fileName = this.indices;
-    let status = true;
     if (typeof content !== 'object' || content.length === 0) {
-
       return false;
     }
 
@@ -114,7 +113,7 @@ class InvertedIndex {
         const bookTitle = Object.hasOwnProperty.call(book, 'title');
         const bookText = Object.hasOwnProperty.call(book, 'text');
         if (!(bookTitle && bookText)) {
-          throw new Error("Invalid book");
+          throw new Error('Invalid book');
         }
       });
       return true;
@@ -123,3 +122,4 @@ class InvertedIndex {
     }
   }
 }
+//module.exports = InvertedIndex;
