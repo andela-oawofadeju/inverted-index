@@ -52,9 +52,10 @@ class InvertedIndex {
 
     if (filePath) {
       this.indices[filePath] = returnResult;
-    } else {
-      this.fullIndex = returnResult;
     }
+    /*else {
+         this.fullIndex = returnResult;
+       }*/
   }
 
   /**
@@ -74,8 +75,8 @@ class InvertedIndex {
    * @returns {Object} Returns result of searched index.
    */
   searchIndex(filePath, query) {
-    let results = []
-    let result = {}
+    let results = [];
+    let result = {};
     let indices = {};
     if (this.getIndex(filePath)) {
       indices[filePath] = this.getIndex(filePath);
@@ -87,13 +88,14 @@ class InvertedIndex {
         if (indices[book].terms.hasOwnProperty(word)) {
           if (!result.hasOwnProperty(book)) {
             result[book] = { terms: {}, count: indices[book].count, filePath: indices[book].filePath };
+            //console.log(result[book]);
           }
-          result[book]["terms"][word] = indices[book].terms[word];
+          result[book]['terms'][word] = indices[book].terms[word];
         }
       });
       !result[book] || results.push(result[book]);
     });
-    return results
+    return results;
   }
 
   /**
