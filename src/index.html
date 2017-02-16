@@ -20,7 +20,7 @@
     <nav class="navbar">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#" ng-binding>{{ indexer.title }}</a>
+          <p class="navbar-brand" ng-binding><strong>{{ indexer.title }}</strong></p>
         </div>
       </div>
     </nav>
@@ -29,14 +29,16 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <p>Inverted Index web application gets the indexes of an array of words in a JSON file and allows a user to search for each word or array of words in a file or multiple files.</p>
+          <p class="text-spec"><b>Inverted Index web application gets the indexes of an array of words in a JSON file and allows a user to search for each word or array of words in a file or multiple files.</b></p>
         </div>
         <div class="col-md-6">
+          <h4>STEP 1: Upload a JSON file</h4>
           <input type="file" file-upload class="form-control" multiple>
-          <h5 class="text-danger" ng-if="errorFileUploadMessage">You need to upload a '<b>valid JSON</b>' file</h5>
+          <h4 class="text-danger" ng-if="errorFileUploadMessage">You need to upload a '<b>valid JSON</b>' file</h4>
           <div class="uploaded-files">
+            <h4>STEP 2: Select File(s)</h4>
             <select id="select-file" class="form-control" ng-model="selectedFile" name="files browser-default input-field">
-              <option value="allFiles" selected="">Choose all files</option>
+              <option value="allFiles" selected>Choose all files</option>
               <option ng-repeat="fileName in fileNames" value="{{fileName}}">{{ fileName }}</option>
             </select>
             <button class="btn" ng-click="indexer.create()">Create Index</button>
@@ -44,11 +46,12 @@
         </div>
       </div>
     </div>
-    <h5 class="text-danger" ng-show="errorSearchMessage">Oops! seems you need to click on the '<b>Create Index</b>' button</h5>
+    <h4 class="text-danger shift-text" ng-show="errorSearchMessage">Oops! seems you need to click on the '<b>Create Index</b>' button</h4>
+    <h4 class="step-3">STEP 3: Search for word(s) or terms in one or more files</h4>
     <div class="search">
       <div class="container">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-sm-6">
             <div class="input-group">
               <input type="search" class="form-control ng-touched ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required" required ng-model="indexer.query" ng-change="indexer.search(indexer.query)" placeholder="Enter a word(s) or term(s) to search" aria-describedby="basic-addon2">
               <select id="select-file" class="form-control select" ng-model="selectedFile" name="files browser-default input-field">
@@ -64,21 +67,24 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <table class="table table-bordered">
-              <thead class="thead-inverse">
-                <tr>
-                  <th>words</th>
-                  <th ng-repeat="number in [] | range:indexer.index.count"> doc_{{ number }}</th>
+            <div ng-repeat="index in indexer.indices">
+              <h2>{{ index.filePath }}</h2>
+              <table class="table table-bordered">
+                <thead class="thead-inverse">
+                  <tr ng-if="indexCreated">
+                    <th class="text-center">words</th>
+                    <th class="text-center" ng-repeat="number in [] | range:index.count"> doc_{{ number }}</th>
+                  </tr>
+                </thead>
+                <tr ng-repeat="(key, values) in index.terms track by $index">
+                  <td class="text-center">{{ key }}</td>
+                  <td class="text-center" ng-repeat="number in [] | range:index.count">
+                    <i ng-if="values.includes(number)" class="fa fa-check" style="color: green" aria-hidden="true"></i>
+                    <i ng-if="!values.includes(number)" class="fa fa-close" style="color: red" aria-hidden="true"></i>
+                  </td>
                 </tr>
-              </thead>
-              <tr ng-repeat="(key, values) in indexer.index.terms track by $index">
-                <td> {{ key }}</td>
-                <td ng-repeat="number in [] | range:indexer.index.count">
-                  <span ng-if="values.includes(number)"> <i class="fa fa-check" style="color: green" aria-hidden="true"></i></span>
-                  <span ng-if="!values.includes(number)"> <i class="fa fa-close" style="color: red" aria-hidden="true"></i></span>
-                </td>
-              </tr>
-            </table>
+              </table>
+            </div>
           </div>
         </div>
       </div>
