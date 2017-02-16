@@ -19,5 +19,5 @@ before_script:
   - npm install -g jasmine
   - npm install
 
-  after_script:
+after_script:
  - cat ./coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
