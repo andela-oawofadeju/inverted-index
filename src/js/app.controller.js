@@ -32,14 +32,13 @@
 
     vm.create = () => {
       if (Object.keys($scope.files).length === 0) {
-        //$scope.errorFileUploadMessage = true;
-        vm.showError("upload");
+        vm.showError('upload');
       } else {
         const fileName = document.getElementById('select-file').value;
         $scope.fileSearch = fileName;
         vm.file = fileName;
         vm.indexer.createIndex(fileName, $scope.files[fileName]);
-        console.log(vm.indexer.getIndex(fileName))
+
         vm.indices[0] = vm.indexer.getIndex(fileName);
 
         vm.showSearch = false;
@@ -50,12 +49,12 @@
 
 
     vm.showError = (type) => {
-      if (type === "upload") {
+      if (type === 'upload') {
         $timeout(() => {
           $scope.errorFileUploadMessage = false;
         }, 3000);
         $scope.errorFileUploadMessage = true;
-      } else if (type === "search") {
+      } else if (type === 'search') {
         $timeout(() => {
           $scope.errorSearchMessage = false;
         }, 3000);
@@ -68,20 +67,14 @@
 
     vm.search = (query) => {
       if ($scope.selectedFile.length === 0) {
-        vm.showError("search");
+        vm.showError('search');
       } else {
-        let result
         if ($scope.selectedFile !== 'allFiles') {
-          console.log($scope.selectedFile)
           vm.indices = vm.indexer.searchIndex($scope.selectedFile, query);
-          console.log(vm.indices);
-
         } else {
-          console.log(query, 'ngghjh');
           vm.indices = vm.indexer.searchIndex(null, query);
         }
         $scope.indexCreated = true ? true : false;
-        // vm.indices.push(result);
         vm.showSearch = true;
         vm.showIndex = false;
       }
