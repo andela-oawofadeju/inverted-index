@@ -11,13 +11,13 @@
     .controller('InvertedIndexController', Indexer);
 
 
-  Indexer.$inject = ['$scope'];
+  Indexer.$inject = ['$scope', '$timeout'];
 
-  function Indexer($scope) {
+  function Indexer($scope, $timeout) {
     const vm = this;
     vm.title = 'INVERTED-INDEX';
     vm.file = null;
-    vm.index = null;
+    vm.indices = [];
     vm.indexer = new InvertedIndex();
     $scope.files = {};
     $scope.fileNames = [];
@@ -26,6 +26,8 @@
     $scope.errorFileUploadMessage = false;
     $scope.errorSearchMessage = false;
     $scope.selectedFile = [];
+    $scope.indexedFiles = [];
+    $scope.indexCreated = false;
 
 
     vm.create = () => {
@@ -37,17 +39,26 @@
         $scope.fileSearch = fileName;
         vm.file = fileName;
         vm.indexer.createIndex(fileName, $scope.files[fileName]);
-        vm.index = vm.indexer.getIndex(fileName);
+        console.log(vm.indexer.getIndex(fileName))
+        vm.indices[0] = vm.indexer.getIndex(fileName);
+
         vm.showSearch = false;
         vm.showIndex = true;
+        $scope.indexCreated = true;
       }
     };
 
 
     vm.showError = (type) => {
       if (type === "upload") {
+        $timeout(() => {
+          $scope.errorFileUploadMessage = false;
+        }, 3000);
         $scope.errorFileUploadMessage = true;
       } else if (type === "search") {
+        $timeout(() => {
+          $scope.errorSearchMessage = false;
+        }, 3000);
         $scope.errorSearchMessage = true;
       }
     };
@@ -59,13 +70,18 @@
       if ($scope.selectedFile.length === 0) {
         vm.showError("search");
       } else {
-        let result;
+        let result
         if ($scope.selectedFile !== 'allFiles') {
-          result = vm.indexer.searchIndex($scope.selectedFile, query);
+          console.log($scope.selectedFile)
+          vm.indices = vm.indexer.searchIndex($scope.selectedFile, query);
+          console.log(vm.indices);
+
         } else {
-          result = vm.indexer.searchIndex(null, query);
+          console.log(query, 'ngghjh');
+          vm.indices = vm.indexer.searchIndex(null, query);
         }
-        vm.index = result;
+        $scope.indexCreated = true ? true : false;
+        // vm.indices.push(result);
         vm.showSearch = true;
         vm.showIndex = false;
       }
