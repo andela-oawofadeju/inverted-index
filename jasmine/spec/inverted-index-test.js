@@ -36,29 +36,29 @@ describe("Inverted Index", () => {
 
   describe('Search Index', () => {
     it('Should return correct index of the search term', () => {
-      expect(invertedIndex.searchIndex('books.json', 'alice, a')).toEqual({
+      expect(invertedIndex.searchIndex('books.json', 'alice, a')[0]).toEqual({
         terms: {
           alice: [1],
           a: [1, 2]
         },
-        count: 2
+        count: 2,
+        filePath: 'books.json'
+
       });
     });
-    it('Should return books.json:{} when no result is found',
+    it('Should return books.json:[] when no result is found',
       () => {
-        expect(invertedIndex.searchIndex('books.json', 'along')).toEqual({
-          terms: {},
-          count: 2
-        });
+        expect(invertedIndex.searchIndex('books.json', 'along')).toEqual([]);
       });
     it('Should return correct index in an array search terms', () => {
-      expect(invertedIndex.searchIndex('books.json', 'alice, [hole,[a]]')).toEqual({
+      expect(invertedIndex.searchIndex('books.json', 'alice, [hole,[a]]')[0]).toEqual({
         terms: {
           alice: [1],
           hole: [1],
           a: [1, 2]
         },
-        count: 2
+        count: 2,
+        filePath: 'books.json'
       });
     });
   });

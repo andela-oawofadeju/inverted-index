@@ -1,17 +1,14 @@
 angular.module('InvertedIndex')
-  .directive('fileUpload', ['$parse', function($parse) {
+  .directive('fileUpload', ['$parse', function() {
     return {
       restrict: 'A',
       controller: 'InvertedIndexController',
-      link: function(scope, element, attrs) {
-        let model = $parse(attrs.fileUpload);
-        let modelSetter = model.assign;
-
+      link: function(scope, element) {
         scope.rawFile;
         element.bind('change', function() {
           scope.$apply(function() {
             scope.rawFile = element[0].files;
-            console.log(element[0].files);
+
             for (var i = 0; i < scope.rawFile.length; i++) {
               const reader = new FileReader();
               const fileName = scope.rawFile[i]['name'];
@@ -24,7 +21,7 @@ angular.module('InvertedIndex')
                     scope.fileNames.push(fileName);
                   });
                 } catch (e) {
-                  console.log('An error occured', e.message);
+                  return ('An error occured', e.message);
                 }
 
                 scope.indexer.indexer.createIndex();

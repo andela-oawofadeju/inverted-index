@@ -11,42 +11,73 @@
     .controller('InvertedIndexController', Indexer);
 
 
-  Indexer.$inject = ['$scope'];
+  Indexer.$inject = ['$scope', '$timeout'];
 
-  function Indexer($scope) {
+  function Indexer($scope, $timeout) {
     const vm = this;
     vm.title = 'INVERTED-INDEX';
     vm.file = null;
-    vm.index = null;
+    vm.indices = [];
     vm.indexer = new InvertedIndex();
     $scope.files = {};
     $scope.fileNames = [];
     $scope.fileSearch = null;
     $scope.allFiles = {};
+    $scope.errorFileUploadMessage = false;
+    $scope.errorSearchMessage = false;
+    $scope.selectedFile = [];
+    $scope.indexedFiles = [];
+    $scope.indexCreated = false;
+
 
     vm.create = () => {
-      const fileName = document.getElementById('select-file').value;
-      $scope.fileSearch = fileName;
-      vm.file = fileName;
-      vm.indexer.createIndex(fileName, $scope.files[fileName]);
-      vm.index = vm.indexer.getIndex(fileName);
-      vm.showSearch = false;
-      vm.showIndex = true;
+      if (Object.keys($scope.files).length === 0) {
+        vm.showError('upload');
+      } else {
+        const fileName = document.getElementById('select-file').value;
+        $scope.fileSearch = fileName;
+        vm.file = fileName;
+        vm.indexer.createIndex(fileName, $scope.files[fileName]);
+
+        vm.indices[0] = vm.indexer.getIndex(fileName);
+
+        vm.showSearch = false;
+        vm.showIndex = true;
+        $scope.indexCreated = true;
+      }
     };
 
-    vm.search = () => {
-      const query = document.getElementById('search').value;
-      let result;
-      if ($scope.selectedFile !== 'allFiles') {
-        result = vm.indexer.searchIndex($scope.selectedFile, query);
-      } else {
-        result = vm.indexer.searchIndex(null, query);
+
+    vm.showError = (type) => {
+      if (type === 'upload') {
+        $timeout(() => {
+          $scope.errorFileUploadMessage = false;
+        }, 3000);
+        $scope.errorFileUploadMessage = true;
+      } else if (type === 'search') {
+        $timeout(() => {
+          $scope.errorSearchMessage = false;
+        }, 3000);
+        $scope.errorSearchMessage = true;
       }
+    };
 
-      vm.index = result;
 
-      vm.showSearch = true;
-      vm.showIndex = false;
+
+
+    vm.search = (query) => {
+      if ($scope.selectedFile.length === 0) {
+        vm.showError('search');
+      } else {
+        if ($scope.selectedFile !== 'allFiles') {
+          vm.indices = vm.indexer.searchIndex($scope.selectedFile, query);
+        } else {
+          vm.indices = vm.indexer.searchIndex(null, query);
+        }
+        $scope.indexCreated = true ? true : false;
+        vm.showSearch = true;
+        vm.showIndex = false;
+      }
     };
 
     vm.uploadFile = function() {
@@ -61,7 +92,7 @@
               $scope.fileNames.push(fileName);
             });
           } catch (e) {
-            console.log('An error occured', e.message);
+            return ('An error occured', e.message);
           }
         };
         if ($scope.rawFile[i].type === 'application/json') {
@@ -75,7 +106,7 @@
         vm.file = fileName;
         vm.indexer.createIndex(fileName, content);
         vm.index = vm.indexer.getIndex(fileName);
-        console.log(vm.index);
+
         vm.count = vm.index.count;
       });
     };

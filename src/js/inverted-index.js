@@ -14,15 +14,16 @@ class InvertedIndex {
    * A tokenizer method
    */
   tokenizer(string) {
-      return string.replace(/[^a-z\d\s]/ig, ' ').trim().toLowerCase().split(/\s+/);
-    }
-    /**
-     * A createIndex method
-     * It takes in the filePath and the contents of the filePath
-     * @param {Object} filePath
-     * @param {Object} content
-     * @returns {Object} Returns object containing index
-     */
+    return string.replace(/[^a-z\d\s]/ig, ' ').trim().toLowerCase().split(/\s+/);
+  }
+
+  /**
+   * A createIndex method
+   * It takes in the filePath and the contents of the filePath
+   * @param {Object} filePath
+   * @param {Object} content
+   * @returns {Object} Returns object containing index
+   */
   createIndex(filePath, content) {
     const result = {};
     // store all json files uploaded in an array which is this.allBooks
@@ -31,8 +32,8 @@ class InvertedIndex {
     }
 
     content.forEach((book, doc) => {
-      for (let key in book) {
-        this.tokenizer(book[key]).forEach(word => {
+      for (const key in book) {
+        this.tokenizer(book[key]).forEach((word) => {
           if (!result.hasOwnProperty(word)) {
             result[word] = [];
           }
@@ -45,14 +46,16 @@ class InvertedIndex {
     });
     const returnResult = {
       terms: result,
-      count: content.length
+      count: content.length,
+      filePath
     };
 
     if (filePath) {
       this.indices[filePath] = returnResult;
-    } else {
-      this.fullIndex = returnResult;
     }
+    /*else {
+         this.fullIndex = returnResult;
+       }*/
   }
 
   /**
@@ -72,27 +75,27 @@ class InvertedIndex {
    * @returns {Object} Returns result of searched index.
    */
   searchIndex(filePath, query) {
-    const result = {};
-    let indexedFile;
-    if (filePath) {
-      indexedFile = this.getIndex(filePath);
+    let results = [];
+    let result = {};
+    let indices = {};
+    if (this.getIndex(filePath)) {
+      indices[filePath] = this.getIndex(filePath);
     } else {
-      indexedFile = this.fullIndex;
+      indices = this.indices;
     }
-
-    if (!query || !indexedFile) {
-      return 'file does not exist';
-    }
-    this.tokenizer(query).forEach(word => {
-      if (indexedFile.terms.hasOwnProperty(word)) {
-        result[word] = indexedFile.terms[word];
-      }
+    Object.keys(indices).forEach((book) => {
+      this.tokenizer(query).forEach((word) => {
+        if (indices[book].terms.hasOwnProperty(word)) {
+          if (!result.hasOwnProperty(book)) {
+            result[book] = { terms: {}, count: indices[book].count, filePath: indices[book].filePath };
+            //console.log(result[book]);
+          }
+          result[book]['terms'][word] = indices[book].terms[word];
+        }
+      });
+      !result[book] || results.push(result[book]);
     });
-    const returnResult = {
-      terms: result,
-      count: indexedFile.count
-    };
-    return returnResult;
+    return results;
   }
 
   /**
@@ -102,10 +105,7 @@ class InvertedIndex {
    */
 
   validateFile(content) {
-    const fileName = this.indices;
-    let status = true;
     if (typeof content !== 'object' || content.length === 0) {
-
       return false;
     }
 
@@ -114,7 +114,7 @@ class InvertedIndex {
         const bookTitle = Object.hasOwnProperty.call(book, 'title');
         const bookText = Object.hasOwnProperty.call(book, 'text');
         if (!(bookTitle && bookText)) {
-          throw new Error("Invalid book");
+          throw new Error('Invalid book');
         }
       });
       return true;
@@ -123,3 +123,4 @@ class InvertedIndex {
     }
   }
 }
+//module.exports = InvertedIndex;
