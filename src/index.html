@@ -37,7 +37,7 @@
           <h4 class="text-danger" ng-if="errorFileUploadMessage">You need to upload a '<b>valid JSON</b>' file</h4>
           <div class="uploaded-files">
             <h4>STEP 2: Select File(s)</h4>
-            <select id="select-file" class="form-control" ng-model="selectedFile" name="files browser-default input-field">
+            <select id="select-file" class="form-control" name="files browser-default input-field">
               <option value="allFiles" selected>Choose all files</option>
               <option ng-repeat="fileName in fileNames" value="{{fileName}}">{{ fileName }}</option>
             </select>
@@ -56,7 +56,7 @@
               <input type="search" class="form-control ng-touched ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required" required ng-model="indexer.query" ng-change="indexer.search(indexer.query)" placeholder="Enter a word(s) or term(s) to search" aria-describedby="basic-addon2">
               <select id="select-file" class="form-control select" ng-model="selectedFile" name="files browser-default input-field">
                 <option value="allFiles" selected="">Choose all files</option>
-                <option ng-repeat="fileName in fileNames" value="{{fileName}}">{{ fileName }}</option>
+                <option ng-repeat="fileName in indexedFiles track by $index " value="{{fileName}}">{{ fileName }}</option>
               </select>
             </div>
           </div>

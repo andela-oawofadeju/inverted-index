@@ -30,7 +30,9 @@
     $scope.indexCreated = false;
 
 
+
     vm.create = () => {
+
       if (Object.keys($scope.files).length === 0) {
         vm.showError('upload');
       } else {
@@ -38,7 +40,8 @@
         $scope.fileSearch = fileName;
         vm.file = fileName;
         vm.indexer.createIndex(fileName, $scope.files[fileName]);
-
+        $scope.indexedFiles.push(fileName);
+        vm.indices = [];
         vm.indices[0] = vm.indexer.getIndex(fileName);
 
         vm.showSearch = false;
