@@ -80,7 +80,7 @@
       }
     };
 
-    vm.uploadFile = function() {
+    vm.uploadFile = () => {
       for (var i = 0; i < $scope.rawFile.length; i++) {
         const reader = new FileReader();
         const fileName = $scope.rawFile[i]['name'];

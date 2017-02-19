@@ -142,3 +142,7 @@ span {
 .table-section {
   margin-top: 30px;
 }
+
+#result-container {
+  padding-bottom: 80px !important;
+}
