@@ -15,8 +15,6 @@ ratings:
   - app/**
   - lib/**
 exclude_paths:
-- spec/**/*
-- "**/vendor/**/*"
-- "jasmine/lib/jasmine-2.3.4/jasmine.js"
-- "jasmine/lib/jasmine-2.3.4/jasmine-html.js"
-- "jasmine/spec/tests/index-test-spec1.js"
+- "jasmine/lib"
+- "lib"
+- "src/lib"
