@@ -12,6 +12,8 @@ class InvertedIndex {
 
   /**
    * A tokenizer method
+   * @param {String} string
+   * @returns{any} void
    */
   tokenizer(string) {
     return string.replace(/[^a-z\d\s]/ig, ' ').trim().toLowerCase().split(/\s+/);
@@ -32,7 +34,8 @@ class InvertedIndex {
     }
 
     content.forEach((book, doc) => {
-      for (const key in book) {
+      Object.keys(book).forEach((key) => {
+      // book.forEach(key) => {
         this.tokenizer(book[key]).forEach((word) => {
           if (!result.hasOwnProperty(word)) {
             result[word] = [];
@@ -42,8 +45,9 @@ class InvertedIndex {
           }
           result[word].push(doc + 1);
         });
-      }
+      });
     });
+
     const returnResult = {
       terms: result,
       count: content.length,
@@ -69,9 +73,9 @@ class InvertedIndex {
   }
 
   /**
-   * Search index method
-   * @param {String} filePath word(s) or terms to search for
-   *  * @param {String} query
+   * searchIndex method
+   * @param {String} filePath uploaded valid JSON file
+   * @param {String} query word(s) or terms to search for
    * @returns {Object} Returns result of searched index.
    */
   searchIndex(filePath, query) {
