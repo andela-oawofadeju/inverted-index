@@ -1,25 +1,22 @@
 engines:
-  rubocop:
-    enabled: true
-  golint:
-    enabled: true
   eslint:
     enabled: true
+    channel: "eslint-2"
   csslint:
     enabled: true
   duplication:
     enabled: true
     config:
       languages:
-      - ruby:
-          mass_threshold: 30
       - javascript
 ratings:
   paths:
+  -src/*.js
   - app/**
   - lib/**
-  - "**.rb"
-  - "**.go"
 exclude_paths:
 - spec/**/*
 - "**/vendor/**/*"
+"jasmine/lib/jasmine-2.3.4/jasmine.js"
+- "jasmine/lib/jasmine-2.3.4/jasmine-html.js"
+- "jasmine/spec/tests/index-test-spec1.js"
