@@ -5,7 +5,10 @@ describe("Inverted Index", () => {
   beforeEach(() => {
     invertedIndex.createIndex('books.json', validBook);
   });
-
+/**
+   * Test suite to ensure the validateFile method returns an object of
+   * the correct index mapping
+   */
   // this is test suite
   describe('Read book data', () => {
     it('Should return false for empty json array', () => {
@@ -16,7 +19,7 @@ describe("Inverted Index", () => {
       expect(invertedIndex.validateFile(validBook)).toEqual(true);
     });
 
-    it('Should return false if json does not contain title abd text', () => {
+    it('Should return false if json does not contain title and text', () => {
       expect(invertedIndex.validateFile(invalidBook)).toEqual(false);
     });
   });
@@ -25,14 +28,38 @@ describe("Inverted Index", () => {
     it('Should ensure that index is created once the file has been read', () => {
       expect(invertedIndex.indices['books.json']).toBeDefined();
     });
+
     it('Should maps the string keys to the correct objects', () => {
       expect(invertedIndex.getIndex('books.json').terms.alice).toEqual([1]);
     });
+    
     it('Should return an object that is an accurate index of the content of the json file',
       () => {
         expect(invertedIndex.getIndex('books.json')).toBeDefined();
       });
   });
+
+ 
+      /**
+   * Test suite to ensure the searchIndex method returns an object of
+   * the correct index mapping
+   */
+
+  describe('Get index', () => {
+    it('should return an object when value is found', () => {
+      const indexedFile = invertedIndex.getIndex('books.json');
+      expect(typeof (indexedFile) === 'object').toBeTruthy();
+    });
+
+   it('should contain valid indexed words and position', () => {
+      expect(invertedIndex.getIndex('books.json').terms.alice).toBeTruthy();
+    });
+  });
+
+ /**
+   * Test suite to ensure the searchIndex method returns an object of
+   * the correct index mapping
+   */
 
   describe('Search Index', () => {
     it('Should return correct index of the search term', () => {
@@ -46,10 +73,12 @@ describe("Inverted Index", () => {
 
       });
     });
+
     it('Should return books.json:[] when no result is found',
       () => {
         expect(invertedIndex.searchIndex('books.json', 'along')).toEqual([]);
       });
+
     it('Should return correct index in an array search terms', () => {
       expect(invertedIndex.searchIndex('books.json', 'alice, [hole,[a]]')[0]).toEqual({
         terms: {
