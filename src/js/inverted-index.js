@@ -16,7 +16,9 @@ class InvertedIndex {
    * @returns{any} void
    */
   tokenizer(string) {
-    return string.replace(/[^a-z\d\s]/ig, ' ').trim().toLowerCase().split(/\s+/);
+    if (string && string.trim().length !== 0) {
+      return string.replace(/[^a-z\d\s]/ig, ' ').trim().toLowerCase().split(/\s+/);
+    }
   }
 
   /**
@@ -37,7 +39,7 @@ class InvertedIndex {
       Object.keys(book).forEach((key) => {
       // book.forEach(key) => {
         this.tokenizer(book[key]).forEach((word) => {
-          if (!result.hasOwnProperty(word)) {
+          if (!Object.prototype.hasOwnProperty.call(result, word)) {
             result[word] = [];
           }
           if (result[word].indexOf(doc + 1) > -1) {
@@ -57,7 +59,7 @@ class InvertedIndex {
     if (filePath) {
       this.indices[filePath] = returnResult;
     }
-    /*else {
+    /* else {
          this.fullIndex = returnResult;
        }*/
   }
@@ -65,7 +67,7 @@ class InvertedIndex {
   /**
    * GetIndex
    * Gets the index of the files uploaded
-   * @param {any} filename
+   * @param {any} filePath
    * @returns {any} void
    */
   getIndex(filePath) {
@@ -79,8 +81,8 @@ class InvertedIndex {
    * @returns {Object} Returns result of searched index.
    */
   searchIndex(filePath, query) {
-    let results = [];
-    let result = {};
+    const results = [];
+    const result = {};
     let indices = {};
     if (this.getIndex(filePath)) {
       indices[filePath] = this.getIndex(filePath);
@@ -89,8 +91,8 @@ class InvertedIndex {
     }
     Object.keys(indices).forEach((book) => {
       this.tokenizer(query).forEach((word) => {
-        if (indices[book].terms.hasOwnProperty(word)) {
-          if (!result.hasOwnProperty(book)) {
+        if (Object.prototype.hasOwnProperty.call(indices[book].terms, word)) {
+          if (!Object.prototype.hasOwnProperty.call(result, book)) {
             result[book] = { terms: {}, count: indices[book].count, filePath: indices[book].filePath };
             //console.log(result[book]);
           }
@@ -127,4 +129,3 @@ class InvertedIndex {
     }
   }
 }
-//module.exports = InvertedIndex;

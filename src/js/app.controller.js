@@ -94,14 +94,15 @@
         const reader = new FileReader();
         const fileName = $scope.rawFile[i]['name'];
         reader.onload = (event) => {
-          
           try {
             $scope.$apply(() => {
               const content = JSON.parse(event.target.result);
               $scope.files[fileName] = content;
               $scope.fileNames.push(fileName);
-              vm.showError('success');
-            });          
+              console.log('loaded');
+              // vm.showError('success');
+            });  
+                  
           } catch (err) {
             return ('An error occured', err.message);
           }
@@ -109,8 +110,10 @@
         if ($scope.rawFile[i].type === 'application/json') {
 
           reader.readAsText($scope.rawFile[i]);
+           vm.showError('success'); 
         }
       }
+ 
     };
 
     vm.processFile = (fileName, content) => {
