@@ -32,6 +32,7 @@
           <p class="text-spec"><b>Inverted Index web application gets the indexes of an array of words in a JSON file and allows a user to search for each word or array of words in a file or multiple files.</b></p>
         </div>
         <div class="col-md-6">
+          <h4 class="text-success" ng-if="successfulFileUpload">JSON file uploaded successfully!</h4>
           <h4>STEP 1: Upload a JSON file</h4>
           <input type="file" file-upload class="form-control" multiple>
           <h4 class="text-danger" ng-if="errorFileUploadMessage">You need to upload a '<b>valid JSON</b>' file</h4>
