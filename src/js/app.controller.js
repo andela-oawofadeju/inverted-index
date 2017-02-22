@@ -28,6 +28,7 @@
     $scope.selectedFile = [];
     $scope.indexedFiles = [];
     $scope.indexCreated = false;
+    $scope.successfulFileUpload = false;
 
 
 
@@ -45,11 +46,11 @@
         vm.indices[0] = vm.indexer.getIndex(fileName);
 
         vm.showSearch = false;
+
         vm.showIndex = true;
         $scope.indexCreated = true;
       }
     };
-
 
     vm.showError = (type) => {
       if (type === 'upload') {
@@ -62,8 +63,13 @@
           $scope.errorSearchMessage = false;
         }, 3000);
         $scope.errorSearchMessage = true;
+      } else if (type === 'success') {
+        $timeout(() => {
+          $scope.successfulFileUpload = false;
+        }, 3000);
+          $scope.successfulFileUpload = true;
       }
-    };
+    }
 
 
 
@@ -88,17 +94,20 @@
         const reader = new FileReader();
         const fileName = $scope.rawFile[i]['name'];
         reader.onload = (event) => {
+          
           try {
             $scope.$apply(() => {
               const content = JSON.parse(event.target.result);
               $scope.files[fileName] = content;
               $scope.fileNames.push(fileName);
-            });
-          } catch (e) {
-            return ('An error occured', e.message);
+              vm.showError('success');
+            });          
+          } catch (err) {
+            return ('An error occured', err.message);
           }
         };
         if ($scope.rawFile[i].type === 'application/json') {
+
           reader.readAsText($scope.rawFile[i]);
         }
       }
