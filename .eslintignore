@@ -1,7 +1,7 @@
 src/js/app.controller.js
 src/js/fileupload.directive.js
 node_modules
-jasmine
+jasmine/lib
 lib
 package.json
 karma.conf.js

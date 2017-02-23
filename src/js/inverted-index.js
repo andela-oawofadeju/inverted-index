@@ -34,10 +34,8 @@ class InvertedIndex {
     if (!filePath) {
       content = this.allBooks;
     }
-
     content.forEach((book, doc) => {
       Object.keys(book).forEach((key) => {
-      // book.forEach(key) => {
         this.tokenizer(book[key]).forEach((word) => {
           if (!Object.prototype.hasOwnProperty.call(result, word)) {
             result[word] = [];
@@ -59,9 +57,6 @@ class InvertedIndex {
     if (filePath) {
       this.indices[filePath] = returnResult;
     }
-    /* else {
-         this.fullIndex = returnResult;
-       }*/
   }
 
   /**
@@ -94,7 +89,6 @@ class InvertedIndex {
         if (Object.prototype.hasOwnProperty.call(indices[book].terms, word)) {
           if (!Object.prototype.hasOwnProperty.call(result, book)) {
             result[book] = { terms: {}, count: indices[book].count, filePath: indices[book].filePath };
-            //console.log(result[book]);
           }
           result[book]['terms'][word] = indices[book].terms[word];
         }
@@ -107,9 +101,8 @@ class InvertedIndex {
   /**
    * validateFile a method to validate json file
    * @param {Object} content
-   * @returns {Array} Returns message in Json format.
+   * @returns {Object} Returns message in Json format.
    */
-
   validateFile(content) {
     if (typeof content !== 'object' || content.length === 0) {
       return false;

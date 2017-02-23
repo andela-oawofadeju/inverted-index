@@ -1,2 +1,2 @@
-web: gulp
+web: node
 
