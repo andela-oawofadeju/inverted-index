@@ -15,7 +15,6 @@ ratings:
   - app/**
   - lib/**
 exclude_paths:
-- spec/**/*
-- "**/vendor/**/*"
 - "jasmine/lib"
+- "lib"
 - "src/lib"
