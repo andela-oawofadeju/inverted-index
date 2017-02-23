@@ -23,7 +23,9 @@ describe("Inverted Index", () => {
       expect(invertedIndex.validateFile(invalidBook)).toEqual(false);
     });
   });
-
+/*
+* Populate Index Test Suite
+*/
   describe('Populate Index', () => {
     it('Should ensure that index is created once the file has been read', () => {
       expect(invertedIndex.indices['books.json']).toBeDefined();
@@ -32,7 +34,7 @@ describe("Inverted Index", () => {
     it('Should maps the string keys to the correct objects', () => {
       expect(invertedIndex.getIndex('books.json').terms.alice).toEqual([1]);
     });
-    
+
     it('Should return an object that is an accurate index of the content of the json file',
       () => {
         expect(invertedIndex.getIndex('books.json')).toBeDefined();
@@ -41,7 +43,7 @@ describe("Inverted Index", () => {
 
  
       /**
-   * Test suite to ensure the searchIndex method returns an object of
+   * Test suite to ensure the getIndex method returns an object of
    * the correct index mapping
    */
 
