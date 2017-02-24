@@ -95,8 +95,7 @@ class InvertedIndex {
           result[book].terms[word] = indices[book].terms[word];
         }
       });
-      // !result[book] ||
-      !result[book] || results.push(result[book]);
+      results.push(result[book]);
     });
     return results;
   }
