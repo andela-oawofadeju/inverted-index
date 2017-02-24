@@ -19,6 +19,7 @@
     vm.file = null;
     vm.indices = [];
     vm.indexer = new InvertedIndex();
+    vm.titles = [];
     $scope.files = {};
     $scope.fileNames = [];
     $scope.fileSearch = null;
@@ -38,6 +39,7 @@
         vm.showError('upload');
       } else {
         const fileName = document.getElementById('select-file').value;
+        vm.saveTitles($scope.files, fileName);
         $scope.fileSearch = fileName;
         vm.file = fileName;
         vm.indexer.createIndex(fileName, $scope.files[fileName]);
@@ -67,11 +69,9 @@
         $timeout(() => {
           $scope.successfulFileUpload = false;
         }, 3000);
-          $scope.successfulFileUpload = true;
+        $scope.successfulFileUpload = true;
       }
     }
-
-
 
 
     vm.search = (query) => {
@@ -80,6 +80,7 @@
       } else {
         if ($scope.selectedFile !== 'allFiles') {
           vm.indices = vm.indexer.searchIndex($scope.selectedFile, query);
+          vm.saveTitles($scope.files, $scope.selectedFile);
         } else {
           vm.indices = vm.indexer.searchIndex(null, query);
         }
@@ -89,32 +90,6 @@
       }
     };
 
-    vm.uploadFile = () => {
-      for (var i = 0; i < $scope.rawFile.length; i++) {
-        const reader = new FileReader();
-        const fileName = $scope.rawFile[i]['name'];
-        reader.onload = (event) => {
-          try {
-            $scope.$apply(() => {
-              const content = JSON.parse(event.target.result);
-              $scope.files[fileName] = content;
-              $scope.fileNames.push(fileName);
-              console.log('loaded');
-              // vm.showError('success');
-            });  
-                  
-          } catch (err) {
-            return ('An error occured', err.message);
-          }
-        };
-        if ($scope.rawFile[i].type === 'application/json') {
-
-          reader.readAsText($scope.rawFile[i]);
-           vm.showError('success'); 
-        }
-      }
- 
-    };
 
     vm.processFile = (fileName, content) => {
       $scope.$apply(() => {
@@ -125,5 +100,14 @@
         vm.count = vm.index.count;
       });
     };
+
+    vm.saveTitles = (contents, fileName) => {
+      let fileContents = contents[fileName];
+      vm.titles = [];
+      fileContents.forEach(content => {
+        vm.titles.push(content.title);
+      });
+    };
+
   }
 }());
