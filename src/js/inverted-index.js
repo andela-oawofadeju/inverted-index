@@ -109,16 +109,18 @@ class InvertedIndex {
     if (typeof content !== 'object' || content.length === 0) {
       return false;
     }
-
+    let isValid = false;
     try {
       content.forEach((book) => {
         const bookTitle = Object.hasOwnProperty.call(book, 'title');
         const bookText = Object.hasOwnProperty.call(book, 'text');
-        if (!(bookTitle && bookText)) {
-          return false;
+
+        if ((bookTitle && bookText)) {
+          isValid = true;
         }
       });
-      return true;
+
+      return isValid;
     } catch (err) {
       return false;
     }

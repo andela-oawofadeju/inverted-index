@@ -39,17 +39,23 @@
         vm.showError('upload');
       } else {
         const fileName = document.getElementById('select-file').value;
+
         vm.saveTitles($scope.files, fileName);
+
         $scope.fileSearch = fileName;
+
         vm.file = fileName;
         vm.indexer.createIndex(fileName, $scope.files[fileName]);
+
         $scope.indexedFiles.push(fileName);
+
         vm.indices = [];
         vm.indices[0] = vm.indexer.getIndex(fileName);
 
         vm.showSearch = false;
 
         vm.showIndex = true;
+
         $scope.indexCreated = true;
       }
     };
@@ -80,8 +86,11 @@
       } else {
         if ($scope.selectedFile !== 'allFiles') {
           vm.indices = vm.indexer.searchIndex($scope.selectedFile, query);
+
           vm.saveTitles($scope.files, $scope.selectedFile);
+
         } else {
+          vm.titles = [];
           vm.indices = vm.indexer.searchIndex(null, query);
         }
         $scope.indexCreated = true ? true : false;

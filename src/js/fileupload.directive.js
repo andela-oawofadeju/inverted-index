@@ -17,6 +17,7 @@ angular.module('InvertedIndex')
                   scope.$apply(() => {
                     const content = JSON.parse(event.target.result);
 
+
                     isValid = scope.indexer.indexer.validateFile(content);
 
                     if (isValid) {
