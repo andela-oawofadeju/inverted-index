@@ -1,9 +1,3 @@
-// const fs = require('fs');
-// const validbook = fs.readFileSync('../books.json');
-// // const emptyBook = fs.readFileSync('../books copy.json');
-// // const invalidBook = fs.readFileSync('../books copy 2.json');
-
-
 const validBook = [{
     "title": "Alice in Wonderland",
     "text": "Alice falls into a rabbit hole and enters a world full of imagination."
