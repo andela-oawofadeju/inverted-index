@@ -17,7 +17,7 @@ module.exports = function(config) {
     files: [
       'jasmine/books.js',
       // 'jasmine/books copy 2.json',
-      // 'jasmine/books copy.json',
+      'jasmine/emptyBook.json',
 
       'src/js/inverted-index.js',
       'jasmine/spec/inverted-index-test.js'
