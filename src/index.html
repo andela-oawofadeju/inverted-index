@@ -74,7 +74,7 @@
                 <thead class="thead-inverse">
                   <tr ng-if="indexCreated">
                     <th class="text-center">words</th>
-                    <th class="text-center" ng-repeat="title in indexer.titles track by $index "> {{title}}</th>
+                    <th class="text-center" ng-repeat="title in indexer.titles track by $index "> {{title}} - test</th>
                   </tr>
                 </thead>
                 <tr ng-repeat="(key, values) in index.terms track by $index">
