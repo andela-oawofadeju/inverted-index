@@ -37,7 +37,6 @@ class InvertedIndex {
     }
     content.forEach((book, doc) => {
       Object.keys(book).forEach((key) => {
-
         InvertedIndex.tokenizer(book[key]).forEach((word) => {
           if (!Object.prototype.hasOwnProperty.call(result, word)) {
             result[word] = [];
@@ -90,7 +89,8 @@ class InvertedIndex {
       InvertedIndex.tokenizer(query).forEach((word) => {
         if (Object.prototype.hasOwnProperty.call(indices[book].terms, word)) {
           if (!Object.prototype.hasOwnProperty.call(result, book)) {
-            result[book] = { terms: {}, count: indices[book].count, filePath: indices[book].filePath };
+            result[book] =
+             { terms: {}, count: indices[book].count, filePath: indices[book].filePath };
           }
           result[book].terms[word] = indices[book].terms[word];
         }
@@ -105,7 +105,7 @@ class InvertedIndex {
    * @param {Object} content
    * @returns {Object} Returns message in Json format.
    */
-  validateFile(content) {
+  static validateFile(content) {
     if (typeof content !== 'object' || content.length === 0) {
       return false;
     }
