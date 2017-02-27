@@ -16,9 +16,21 @@ angular.module('InvertedIndex')
                 try {
                   scope.$apply(() => {
                     const content = JSON.parse(event.target.result);
-                    scope.indexer.indexer.allBooks = scope.indexer.indexer.allBooks.concat(content);
-                    scope.files[fileName] = content;
-                    scope.fileNames.push(fileName);
+
+
+                    isValid = scope.indexer.indexer.validateFile(content);
+
+                    if (isValid) {
+                      scope.indexer.indexer.allBooks = scope.indexer.indexer.allBooks.concat(content);
+                      scope.files[fileName] = content;
+                      scope.fileNames.push(fileName);
+
+                      scope.indexer.showError('success');
+
+                    } else {
+                      scope.indexer.showError('upload');
+                    }
+
                   });
                 } catch (e) {
                   return ('An error occured', e.message);

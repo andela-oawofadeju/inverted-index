@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars*/
 /**
  * @class InvertedIndex
  */
@@ -15,7 +16,7 @@ class InvertedIndex {
    * @param {String} string
    * @returns{any} void
    */
-  tokenizer(string) {
+  static tokenizer(string) {
     if (string && string.trim().length !== 0) {
       return string.replace(/[^a-z\d\s]/ig, ' ').trim().toLowerCase().split(/\s+/);
     }
@@ -24,7 +25,7 @@ class InvertedIndex {
   /**
    * A createIndex method
    * It takes in the filePath and the contents of the filePath
-   * @param {Object} filePath
+   * @param {String} filePath
    * @param {Object} content
    * @returns {Object} Returns object containing index
    */
@@ -36,7 +37,8 @@ class InvertedIndex {
     }
     content.forEach((book, doc) => {
       Object.keys(book).forEach((key) => {
-        this.tokenizer(book[key]).forEach((word) => {
+
+        InvertedIndex.tokenizer(book[key]).forEach((word) => {
           if (!Object.prototype.hasOwnProperty.call(result, word)) {
             result[word] = [];
           }
@@ -62,7 +64,7 @@ class InvertedIndex {
   /**
    * GetIndex
    * Gets the index of the files uploaded
-   * @param {any} filePath
+   * @param {String} filePath
    * @returns {any} void
    */
   getIndex(filePath) {
@@ -85,15 +87,15 @@ class InvertedIndex {
       indices = this.indices;
     }
     Object.keys(indices).forEach((book) => {
-      this.tokenizer(query).forEach((word) => {
+      InvertedIndex.tokenizer(query).forEach((word) => {
         if (Object.prototype.hasOwnProperty.call(indices[book].terms, word)) {
           if (!Object.prototype.hasOwnProperty.call(result, book)) {
             result[book] = { terms: {}, count: indices[book].count, filePath: indices[book].filePath };
           }
-          result[book]['terms'][word] = indices[book].terms[word];
+          result[book].terms[word] = indices[book].terms[word];
         }
       });
-      !result[book] || results.push(result[book]);
+      results.push(result[book]);
     });
     return results;
   }
@@ -107,16 +109,18 @@ class InvertedIndex {
     if (typeof content !== 'object' || content.length === 0) {
       return false;
     }
-
+    let isValid = false;
     try {
       content.forEach((book) => {
         const bookTitle = Object.hasOwnProperty.call(book, 'title');
         const bookText = Object.hasOwnProperty.call(book, 'text');
-        if (!(bookTitle && bookText)) {
-          throw new Error('Invalid book');
+
+        if ((bookTitle && bookText)) {
+          isValid = true;
         }
       });
-      return true;
+
+      return isValid;
     } catch (err) {
       return false;
     }
