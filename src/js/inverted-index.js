@@ -105,7 +105,7 @@ class InvertedIndex {
    * @param {Object} content
    * @returns {Object} Returns message in Json format.
    */
-  static validateFile(content) {
+  validateFile(content) {
     if (typeof content !== 'object' || content.length === 0) {
       return false;
     }
