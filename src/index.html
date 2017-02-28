@@ -68,18 +68,18 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12" id="result-container">
-            <div ng-repeat="index in indexer.indices">
+            <div ng-repeat="index in indexer.indices track by $index">
               <h2>{{ index.filePath }}</h2>
               <table class="table table-bordered">
                 <thead class="thead-inverse">
                   <tr ng-if="indexCreated">
                     <th class="text-center">words</th>
-                    <th class="text-center" ng-repeat="title in indexer.titles track by $index "> {{title}} - test</th>
+                    <th class="text-center" ng-repeat="title in indexer.titles[index.filePath] track by $index "> {{title}}</th>
                   </tr>
                 </thead>
                 <tr ng-repeat="(key, values) in index.terms track by $index">
                   <td class="text-center">{{ key }}</td>
-                  <td class="text-center" ng-repeat="number in [] | range:index.count">
+                  <td class="text-center" ng-repeat="number in [] | range:index.count track by $index">
                     <i ng-if="values.includes(number)" class="fa fa-check" style="color: green" aria-hidden="true"></i>
                     <i ng-if="!values.includes(number)" class="fa fa-close" style="color: red" aria-hidden="true"></i>
                   </td>
