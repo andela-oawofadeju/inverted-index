@@ -10,7 +10,6 @@
     })
     .controller('InvertedIndexController', Indexer);
 
-
   Indexer.$inject = ['$scope', '$timeout'];
 
   function Indexer($scope, $timeout) {
