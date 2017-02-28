@@ -89,8 +89,7 @@ class InvertedIndex {
       InvertedIndex.tokenizer(query).forEach((word) => {
         if (Object.prototype.hasOwnProperty.call(indices[book].terms, word)) {
           if (!Object.prototype.hasOwnProperty.call(result, book)) {
-            result[book] =
-             { terms: {}, count: indices[book].count, filePath: indices[book].filePath };
+            result[book] = { terms: {}, count: indices[book].count, filePath: indices[book].filePath };
           }
           result[book].terms[word] = indices[book].terms[word];
         }

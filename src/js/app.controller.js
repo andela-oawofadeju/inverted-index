@@ -19,7 +19,7 @@
     vm.file = null;
     vm.indices = [];
     vm.indexer = new InvertedIndex();
-    vm.titles = [];
+    vm.titles = {};
     $scope.files = {};
     $scope.fileNames = [];
     $scope.fileSearch = null;
@@ -90,7 +90,6 @@
           vm.saveTitles($scope.files, $scope.selectedFile);
 
         } else {
-          vm.titles = [];
           vm.indices = vm.indexer.searchIndex(null, query);
         }
         $scope.indexCreated = true ? true : false;
@@ -111,9 +110,10 @@
 
     vm.saveTitles = (contents, fileName) => {
       let fileContents = contents[fileName];
-      vm.titles = [];
+      vm.titles[fileName] = [];
+
       fileContents.forEach(content => {
-        vm.titles.push(content.title);
+        vm.titles[fileName].push(content.title);
       });
     };
 
