@@ -1,3 +1,7 @@
+/* eslint-disable no-unused-vars*/
+/* eslint-disable no-undef*/
+/* eslint-disable no-dupe-keys*/
+/* eslint-disable no-multi-assign*/
 const invertedIndex = new InvertedIndex();
 const books = require('../books.json');
 const empty = require('../emptyBook.json');
@@ -10,11 +14,9 @@ describe("Inverted Index", () => {
    * the correct index mapping
    */
 
-
   describe('Read book data', () => {
     it('Should ensure file content is actually a valid JSON array', () => {
       expect(InvertedIndex.validateFile(books)).toEqual(true);
-      console.log(books);
     });
 
     it('Should return false for invalid JSON file', () => {
@@ -25,6 +27,7 @@ describe("Inverted Index", () => {
       expect(InvertedIndex.validateFile(empty)).toEqual(false);
     });
   });
+
   /*
    * Populate Index Test Suite
    */
@@ -56,15 +59,29 @@ describe("Inverted Index", () => {
    */
 
   describe('Get index', () => {
-    it('should return an object when value is found', () => {
+    it('Should return an object when value is found', () => {
       const indexedFile = invertedIndex.getIndex('books.json');
       expect(typeof(indexedFile) === 'object').toBeTruthy();
     });
 
-    it('should contain valid indexed words and position', () => {
+    it('Should contain valid indexed words and position', () => {
       expect(invertedIndex.getIndex('books.json').terms.alice).toEqual([1]);
       expect(invertedIndex.getIndex('books.json').terms.and).toEqual([1, 2]);
       expect(invertedIndex.getIndex('books.json').terms.lord).toEqual([2]);
+    });
+  });
+
+  /**
+   * Test suite to ensure the tokenizer method returns an object of
+   * the correct index mapping
+   */
+  describe('Tokenizer', () => {
+    it('Should return an array when a string is passed', () => {
+      expect(InvertedIndex.tokenizer('This is yemi')).toEqual(['this', 'is', 'yemi']);
+    });
+    it('Should return an array when a recursive array is passed', () => {
+      expect(InvertedIndex.tokenizer('books.json', ['a', 'alice'], 'book', 'me'))
+        .toEqual(['books', 'json']);
     });
   });
 
@@ -88,7 +105,7 @@ describe("Inverted Index", () => {
 
     it('Should return books.json:[] when no result is found',
       () => {
-        expect(invertedIndex.searchIndex('books.json', 'along')).toEqual([undefined]);
+        expect(invertedIndex.searchIndex('books.json', 'along')).toEqual(false);
       });
 
     it('Should return correct index in an array search terms', () => {
@@ -102,5 +119,31 @@ describe("Inverted Index", () => {
         fileName: 'books.json'
       });
     });
+    it('Should ensure searchIndex can handle a number of varied search terms', () => {
+      expect(invertedIndex.searchIndex('littleBook.json', '[is, [ali, book, me, [help, me, out]]]')).toEqual([{
+        terms: {
+          is: [1, 2],
+          ali: [1],
+          me: [2]
+        },
+        count: 2,
+        fileName: 'littleBook.json'
+      }]);
+    });
+    it('Should go through all indexed terms if fileName is not passed', () => {
+      expect(invertedIndex.searchIndex(null, 'alice, ali')).toEqual([{
+        terms: {
+          alice: [1]
+        },
+        count: 2,
+        fileName: 'books.json'
+      }, {
+        terms: {
+          ali: [1]
+        },
+        count: 2,
+        fileName: 'littleBook.json'
+      }])
+    })
   });
 });
