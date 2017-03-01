@@ -7,8 +7,8 @@ const books = require('../books.json');
 const empty = require('../emptyBook.json');
 const invalid = require('../invalidBook.json');
 const little = require('../littleBook.json');
-describe("Inverted Index", () => {
 
+describe('Inverted Index', () => {
   /**
    * Test suite to ensure the validateFile method returns an object of
    * the correct index mapping
@@ -61,7 +61,7 @@ describe("Inverted Index", () => {
   describe('Get index', () => {
     it('Should return an object when value is found', () => {
       const indexedFile = invertedIndex.getIndex('books.json');
-      expect(typeof(indexedFile) === 'object').toBeTruthy();
+      expect(typeof (indexedFile) === 'object').toBeTruthy();
     });
 
     it('Should contain valid indexed words and position', () => {
@@ -146,7 +146,7 @@ describe("Inverted Index", () => {
         },
         count: 2,
         fileName: 'littleBook.json'
-      }])
-    })
+      }]);
+    });
   });
 });
