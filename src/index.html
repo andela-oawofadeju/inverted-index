@@ -69,12 +69,12 @@
         <div class="row">
           <div class="col-md-12" id="result-container">
             <div ng-repeat="index in indexer.indices track by $index">
-              <h2>{{ index.filePath }}</h2>
+              <h2>{{ index.fileName }}</h2>
               <table class="table table-bordered">
                 <thead class="thead-inverse">
                   <tr ng-if="indexCreated">
                     <th class="text-center">words</th>
-                    <th class="text-center" ng-repeat="title in indexer.titles[index.filePath] track by $index "> {{title}}</th>
+                    <th class="text-center" ng-repeat="title in indexer.titles[index.fileName] track by $index "> {{title}}</th>
                   </tr>
                 </thead>
                 <tr ng-repeat="(key, values) in index.terms track by $index">
