@@ -15,12 +15,12 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'jasmine/books.js',
-      // 'jasmine/books copy 2.json',
-      'jasmine/emptyBook.json',
+      //'jasmine/books.js',
+      // 'jasmine/books.json',
+      // 'jasmine/emptyBook.json',
 
       'src/js/inverted-index.js',
-      'jasmine/spec/inverted-index-test.js'
+      'jasmine/build/browser-test.spec.js'
     ],
 
 
