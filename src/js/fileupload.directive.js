@@ -15,14 +15,14 @@ angular.module('InvertedIndex')
               reader.onload = (event) => {
                 try {
                   scope.$apply(() => {
-                    const content = JSON.parse(event.target.result);
+                    const fileContent = JSON.parse(event.target.result);
 
 
-                    isValid = scope.indexer.indexer.validateFile(content);
+                    isValid = InvertedIndex.validateFile(fileContent);
 
                     if (isValid) {
-                      scope.indexer.indexer.allBooks = scope.indexer.indexer.allBooks.concat(content);
-                      scope.files[fileName] = content;
+                      scope.indexer.indexer.allBooks = scope.indexer.indexer.allBooks.concat(fileContent);
+                      scope.files[fileName] = fileContent;
                       scope.fileNames.push(fileName);
 
                       scope.indexer.showError('success');
