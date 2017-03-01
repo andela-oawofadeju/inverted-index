@@ -100,6 +100,9 @@ class InvertedIndex {
       });
       results.push(result[book]);
     });
+    if (typeof results[0] === 'undefined') {
+      return false;
+    }
     return results;
   }
 
@@ -109,7 +112,6 @@ class InvertedIndex {
    * @returns {Object} Returns message in Json format.
    */
   static validateFile(fileContent) {
-    console.log(fileContent.length);
     if (typeof fileContent !== 'object' || fileContent.length === 0) {
       return false;
     }
