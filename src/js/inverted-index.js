@@ -24,18 +24,18 @@ class InvertedIndex {
 
   /**
    * A createIndex method
-   * It takes in the filePath and the contents of the filePath
-   * @param {String} filePath
-   * @param {Object} content
+   * It takes in the fileName and the contents of the fileName
+   * @param {String} fileName
+   * @param {Object} fileContent
    * @returns {Object} Returns object containing index
    */
-  createIndex(filePath, content) {
+  createIndex(fileName, fileContent) {
     const result = {};
     // store all json files uploaded in an array which is this.allBooks
-    if (!filePath) {
-      content = this.allBooks;
+    if (!fileName) {
+      fileContent = this.allBooks;
     }
-    content.forEach((book, doc) => {
+    fileContent.forEach((book, doc) => {
       Object.keys(book).forEach((key) => {
         InvertedIndex.tokenizer(book[key]).forEach((word) => {
           if (!Object.prototype.hasOwnProperty.call(result, word)) {
@@ -51,37 +51,37 @@ class InvertedIndex {
 
     const returnResult = {
       terms: result,
-      count: content.length,
-      filePath
+      count: fileContent.length,
+      fileName
     };
 
-    if (filePath) {
-      this.indices[filePath] = returnResult;
+    if (fileName) {
+      this.indices[fileName] = returnResult;
     }
   }
 
   /**
    * GetIndex
    * Gets the index of the files uploaded
-   * @param {String} filePath
+   * @param {String} fileName
    * @returns {any} void
    */
-  getIndex(filePath) {
-    return this.indices[filePath];
+  getIndex(fileName) {
+    return this.indices[fileName];
   }
 
   /**
    * searchIndex method
-   * @param {String} filePath uploaded valid JSON file
+   * @param {String} fileName uploaded valid JSON file
    * @param {String} query word(s) or terms to search for
    * @returns {Object} Returns result of searched index.
    */
-  searchIndex(filePath, query) {
+  searchIndex(fileName, query) {
     const results = [];
     const result = {};
     let indices = {};
-    if (this.getIndex(filePath)) {
-      indices[filePath] = this.getIndex(filePath);
+    if (this.getIndex(fileName)) {
+      indices[fileName] = this.getIndex(fileName);
     } else {
       indices = this.indices;
     }
@@ -92,7 +92,7 @@ class InvertedIndex {
             result[book] = {
               terms: {},
               count: indices[book].count,
-              filePath: indices[book].filePath
+              fileName: indices[book].fileName
             };
           }
           result[book].terms[word] = indices[book].terms[word];
@@ -105,16 +105,18 @@ class InvertedIndex {
 
   /**
    * validateFile a method to validate json file
-   * @param {Object} content
+   * @param {Object} fileContent
    * @returns {Object} Returns message in Json format.
    */
-  validateFile(content) {
-    if (typeof content !== 'object' || content.length === 0) {
+  static validateFile(fileContent) {
+    console.log(fileContent.length);
+    if (typeof fileContent !== 'object' || fileContent.length === 0) {
       return false;
     }
+
     let isValid = false;
     try {
-      content.forEach((book) => {
+      fileContent.forEach((book) => {
         const bookTitle = Object.hasOwnProperty.call(book, 'title');
         const bookText = Object.hasOwnProperty.call(book, 'text');
 
