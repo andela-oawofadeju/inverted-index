@@ -1,52 +1,51 @@
 const invertedIndex = new InvertedIndex();
-
+const books = require('../books.json');
+const empty = require('../emptyBook.json');
+const invalid = require('../invalidBook.json');
+const little = require('../littleBook.json');
 describe("Inverted Index", () => {
 
   /**
    * Test suite to ensure the validateFile method returns an object of
    * the correct index mapping
    */
-  // this is test suite
+
 
   describe('Read book data', () => {
-    invertedIndex.validateFile('books.json');
-
-    it('Should ensure that JSON file is not empty', () => {
-      const bookLength = Object.keys('books.json').length;
-      expect(bookLength > 0).toEqual(true)
-
+    it('Should ensure file content is actually a valid JSON array', () => {
+      expect(InvertedIndex.validateFile(books)).toEqual(true);
+      console.log(books);
     });
 
-    it('Should return true for valid json file', () => {
-      expect(invertedIndex.validateFile(validBook)).toEqual(true);
+    it('Should return false for invalid JSON file', () => {
+      expect(InvertedIndex.validateFile(invalid)).toEqual(false);
     });
 
-    it('Should return false if json does not contain title and text', () => {
-      expect(invertedIndex.validateFile(invalidBook)).toEqual(false);
+    it('Should ensure that JSON array is not empty', () => {
+      expect(InvertedIndex.validateFile(empty)).toEqual(false);
     });
-
   });
-
   /*
    * Populate Index Test Suite
    */
 
   describe('Populate Index', () => {
-    invertedIndex.createIndex('books.json', validBook);
+    invertedIndex.createIndex('books.json', books);
+
 
     it('Should ensure that index is created once the file has been read', () => {
       expect(invertedIndex.indices['books.json']).toBeDefined();
     });
 
-    it('Should maps the string keys to the correct objects', () => {
+    it('Should map the string keys to the correct objects', () => {
       expect(invertedIndex.indices['books.json'].terms.alice).toEqual([1]);
       expect(invertedIndex.indices['books.json'].terms.and).toEqual([1, 2]);
       expect(invertedIndex.indices['books.json'].terms.lord).toEqual([2]);
     });
 
-
-    it('Should return an object that is an accurate index of the content of the json file', () => {
-      expect(invertedIndex.getIndex('books.json')).toBeDefined();
+    invertedIndex.createIndex('littleBook.json', little);
+    it('Should return an accurate index of the content of the json file', () => {
+      expect(invertedIndex.getIndex('littleBook.json').terms.is).toEqual([1, 2]);
     });
 
   });
@@ -83,7 +82,7 @@ describe("Inverted Index", () => {
           a: [1, 2]
         },
         count: 2,
-        filePath: 'books.json'
+        fileName: 'books.json'
       });
     });
 
@@ -100,7 +99,7 @@ describe("Inverted Index", () => {
           a: [1, 2]
         },
         count: 2,
-        filePath: 'books.json'
+        fileName: 'books.json'
       });
     });
   });
