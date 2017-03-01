@@ -3,7 +3,6 @@ src/js/fileupload.directive.js
 jasmine/books.js
 node_modules
 jasmine/lib
-jasmine/spec
 gulpfile.js
 lib
 package.json
