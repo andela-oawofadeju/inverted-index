@@ -18,7 +18,8 @@ class InvertedIndex {
    */
   static tokenizer(string) {
     if (string && string.trim().length !== 0) {
-      return string.replace(/[^a-z\d\s]/ig, ' ').trim().toLowerCase().split(/\s+/);
+      return string.replace(/[^a-z\d\s]/ig, ' ').trim().toLowerCase()
+        .split(/\s+/);
     }
   }
 

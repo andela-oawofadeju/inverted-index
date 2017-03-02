@@ -36,7 +36,7 @@ describe('Inverted Index', () => {
     invertedIndex.createIndex('books.json', books);
 
 
-    it('Should ensure that index is created once the file has been read', () => {
+    it('Should ensure that index is created once file has been read', () => {
       expect(invertedIndex.indices['books.json']).toBeDefined();
     });
 
@@ -47,8 +47,9 @@ describe('Inverted Index', () => {
     });
 
     invertedIndex.createIndex('littleBook.json', little);
-    it('Should return an accurate index of the content of the json file', () => {
-      expect(invertedIndex.getIndex('littleBook.json').terms.is).toEqual([1, 2]);
+    it('Should return an accurate index of json file content', () => {
+      expect(invertedIndex.getIndex('littleBook.json').terms.is)
+        .toEqual([1, 2]);
     });
 
   });
@@ -61,7 +62,7 @@ describe('Inverted Index', () => {
   describe('Get index', () => {
     it('Should return an object when value is found', () => {
       const indexedFile = invertedIndex.getIndex('books.json');
-      expect(typeof (indexedFile) === 'object').toBeTruthy();
+      expect(typeof(indexedFile) === 'object').toBeTruthy();
     });
 
     it('Should contain valid indexed words and position', () => {
@@ -77,10 +78,11 @@ describe('Inverted Index', () => {
    */
   describe('Tokenizer', () => {
     it('Should return an array when a string is passed', () => {
-      expect(InvertedIndex.tokenizer('This is yemi')).toEqual(['this', 'is', 'yemi']);
+      expect(InvertedIndex.tokenizer('This is yemi'))
+        .toEqual(['this', 'is', 'yemi']);
     });
     it('Should return an array when a recursive array is passed', () => {
-      expect(InvertedIndex.tokenizer('books.json', ['a', 'alice'], 'book', 'me'))
+      expect(InvertedIndex.tokenizer('books.json', ['a'], 'book', ['lord']))
         .toEqual(['books', 'json']);
     });
   });
@@ -120,9 +122,9 @@ describe('Inverted Index', () => {
           fileName: 'books.json'
         });
     });
-    it('Should ensure searchIndex handles a number of varied search terms', () => {
+    it('Should ensure searchIndex handles varied search terms', () => {
       expect(invertedIndex
-          .searchIndex('littleBook.json', '[is, [ali, book, me, [help, me, out]]]'))
+          .searchIndex('littleBook.json', '[is, [ali, me, [help, me, out]]]'))
         .toEqual([{
           terms: {
             is: [1, 2],
