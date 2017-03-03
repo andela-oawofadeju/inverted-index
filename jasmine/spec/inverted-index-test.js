@@ -51,7 +51,6 @@ describe('Inverted Index', () => {
       expect(invertedIndex.getIndex('littleBook.json').terms.is)
         .toEqual([1, 2]);
     });
-
   });
 
   /**
@@ -62,7 +61,7 @@ describe('Inverted Index', () => {
   describe('Get index', () => {
     it('Should return an object when value is found', () => {
       const indexedFile = invertedIndex.getIndex('books.json');
-      expect(typeof(indexedFile) === 'object').toBeTruthy();
+      expect(typeof indexedFile === 'object').toBeTruthy();
     });
 
     it('Should contain valid indexed words and position', () => {
@@ -81,9 +80,20 @@ describe('Inverted Index', () => {
       expect(InvertedIndex.tokenizer('This is yemi'))
         .toEqual(['this', 'is', 'yemi']);
     });
-    it('Should return an array when a recursive array is passed', () => {
-      expect(InvertedIndex.tokenizer('books.json', ['a'], 'book', ['lord']))
-        .toEqual(['books', 'json']);
+
+    it('Should return an array for strings with special characters', () => {
+      expect(InvertedIndex.tokenizer('$#@ this&#@ is*&% testing'))
+      .toEqual(['this', 'is', 'testing']);
+    });
+
+    it('Should return an array for strings with white spaces', () => {
+      expect(InvertedIndex.tokenizer('    these     are    lots     of      spaces   '))
+  .toEqual(['these', 'are', 'lots', 'of', 'spaces']);
+    });
+
+    it('Should return an array for strings with uppercases', () => {
+      expect(InvertedIndex.tokenizer('    theSe aRe lOtS oF cAsEs   '))
+  .toEqual(['these', 'are', 'lots', 'of', 'cases']);
     });
   });
 
@@ -93,7 +103,7 @@ describe('Inverted Index', () => {
    */
 
   describe('Search Index', () => {
-    invertedIndex.searchIndex('../books.json', 'alice');
+    invertedIndex.searchIndex('books.json', 'alice');
     it('Should return correct index of the search term', () => {
       expect(invertedIndex.searchIndex('books.json', 'alice, a')[0]).toEqual({
         terms: {
