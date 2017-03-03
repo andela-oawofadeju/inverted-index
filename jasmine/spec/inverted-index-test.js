@@ -44,9 +44,20 @@ describe('Inverted Index', () => {
       expect(invertedIndex.indices['books.json'].terms.alice).toEqual([1]);
       expect(invertedIndex.indices['books.json'].terms.and).toEqual([1, 2]);
       expect(invertedIndex.indices['books.json'].terms.lord).toEqual([2]);
+      expect(invertedIndex.indices['books.json'].terms.lord).not.toEqual([1]);
+      expect(invertedIndex.indices['books.json'].terms.alice).not.toEqual([2]);
     });
-
     invertedIndex.createIndex('littleBook.json', little);
+    it('Should return correct indices of JSON file contents', () => {
+      expect(invertedIndex.indices['littleBook.json'].terms).toEqual({
+        ali: [1],
+        is: [1, 2],
+        human: [1],
+        deliver: [2],
+        me: [2],
+        this: [2],
+        progress: [2] });
+    });
     it('Should return an accurate index of json file content', () => {
       expect(invertedIndex.getIndex('littleBook.json').terms.is)
         .toEqual([1, 2]);
@@ -68,6 +79,17 @@ describe('Inverted Index', () => {
       expect(invertedIndex.getIndex('books.json').terms.alice).toEqual([1]);
       expect(invertedIndex.getIndex('books.json').terms.and).toEqual([1, 2]);
       expect(invertedIndex.getIndex('books.json').terms.lord).toEqual([2]);
+    });
+    invertedIndex.createIndex('littleBook.json', little);
+    it('Should return correct indices of JSON file contents', () => {
+      expect(invertedIndex.getIndex('littleBook.json').terms).toEqual({
+        ali: [1],
+        is: [1, 2],
+        human: [1],
+        deliver: [2],
+        me: [2],
+        this: [2],
+        progress: [2] });
     });
   });
 
@@ -115,11 +137,6 @@ describe('Inverted Index', () => {
       });
     });
 
-    it('Should return books.json:[] when no result is found',
-      () => {
-        expect(invertedIndex.searchIndex('books.json', 'along')).toEqual(false);
-      });
-
     it('Should return correct index in an array search terms', () => {
       expect(invertedIndex.searchIndex('books.json', 'alice, [hole,[a]]')[0])
         .toEqual({
@@ -132,7 +149,7 @@ describe('Inverted Index', () => {
           fileName: 'books.json'
         });
     });
-    it('Should ensure searchIndex handles varied search terms', () => {
+    it('Should ensure searchIndex handles varied search terms as arguments', () => {
       expect(invertedIndex
           .searchIndex('littleBook.json', '[is, [ali, me, [help, me, out]]]'))
         .toEqual([{
