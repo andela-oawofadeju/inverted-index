@@ -18,8 +18,10 @@ class InvertedIndex {
    */
   static tokenizer(string) {
     if (string && string.trim().length !== 0) {
-      return string.replace(/[^a-z\d\s]/ig, ' ').trim().toLowerCase()
-        .split(/\s+/);
+      return string.replace(/[^a-z\d\s]/ig, ' ')
+      .trim()
+      .toLowerCase()
+      .split(/\s+/);
     }
   }
 
@@ -55,7 +57,6 @@ class InvertedIndex {
       count: fileContent.length,
       fileName
     };
-
     if (fileName) {
       this.indices[fileName] = returnResult;
     }
@@ -116,18 +117,16 @@ class InvertedIndex {
     if (typeof fileContent !== 'object' || fileContent.length === 0) {
       return false;
     }
-
     let isValid = false;
     try {
       fileContent.forEach((book) => {
-        const bookTitle = Object.hasOwnProperty.call(book, 'title');
-        const bookText = Object.hasOwnProperty.call(book, 'text');
+        const bookTitle = Object.prototype.hasOwnProperty.call(book, 'title');
+        const bookText = Object.prototype.hasOwnProperty.call(book, 'text');
 
         if ((bookTitle && bookText)) {
           isValid = true;
         }
       });
-
       return isValid;
     } catch (err) {
       return false;
