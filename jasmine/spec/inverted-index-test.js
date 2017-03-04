@@ -9,10 +9,6 @@ const invalid = require('../invalidBook.json');
 const little = require('../littleBook.json');
 
 describe('Inverted Index', () => {
-  /**
-   * Test suite to ensure the validateFile method returns an object of
-   * the correct index mapping
-   */
 
   describe('Read book data', () => {
     it('Should ensure file content is actually a valid JSON array', () => {
@@ -27,10 +23,6 @@ describe('Inverted Index', () => {
       expect(InvertedIndex.validateFile(empty)).toEqual(false);
     });
   });
-
-  /*
-   * Populate Index Test Suite
-   */
 
   describe('Populate Index', () => {
     invertedIndex.createIndex('books.json', books);
@@ -64,11 +56,6 @@ describe('Inverted Index', () => {
     });
   });
 
-  /**
-   * Test suite to ensure the getIndex method returns an object of
-   * the correct index mapping
-   */
-
   describe('Get index', () => {
     it('Should return an object when value is found', () => {
       const indexedFile = invertedIndex.getIndex('books.json');
@@ -93,10 +80,6 @@ describe('Inverted Index', () => {
     });
   });
 
-  /**
-   * Test suite to ensure the tokenizer method returns an object of
-   * the correct index mapping
-   */
   describe('Tokenizer', () => {
     it('Should return an array when a string is passed', () => {
       expect(InvertedIndex.tokenizer('This is yemi'))
@@ -123,11 +106,6 @@ describe('Inverted Index', () => {
   .toEqual(['these', 'are', 'lots', 'of', 'cases']);
     });
   });
-
-  /**
-   * Test suite to ensure the searchIndex method returns an object of
-   * the correct index mapping
-   */
 
   describe('Search Index', () => {
     invertedIndex.searchIndex('books.json', 'alice');
