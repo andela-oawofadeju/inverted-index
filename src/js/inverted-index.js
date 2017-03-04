@@ -87,7 +87,7 @@ class InvertedIndex {
    * @param {String} query word(s) or terms to search for
    * @returns {Object} Returns result of searched index.
    */
-  searchIndex(fileName, query) {
+  searchIndex(fileName, ...query) {
     const results = [];
     const result = {};
     let indices = {};
