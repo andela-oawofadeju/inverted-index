@@ -168,12 +168,13 @@ describe('Inverted Index', () => {
         }]);
 
       expect(invertedIndex
-          .searchIndex('littleBook.json', 'is', 'progress', 'this'))
+          .searchIndex('littleBook.json', 'is', 'progress', 'this', 'ali'))
         .toEqual([{
           terms: {
             is: [1, 2],
             progress: [2],
             this: [2],
+            ali: [1]
           },
           count: 2,
           fileName: 'littleBook.json'
