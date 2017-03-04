@@ -13,10 +13,19 @@ class InvertedIndex {
 
   /**
    * A tokenizer method
-   * @param {String} string
+   * @param {String | Array} query
    * @returns{any} void
    */
-  static tokenizer(string) {
+  static tokenizer(query) {
+    let string = '';
+    if (Array.isArray(query)) {
+      query.forEach((term) => {
+        string += `${term} `;
+      });
+    } else {
+      string = query;
+    }
+
     if (string && string.trim().length !== 0) {
       return string.replace(/[^a-z\d\s]/ig, ' ')
       .trim()
