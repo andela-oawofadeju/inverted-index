@@ -138,12 +138,13 @@ describe('Inverted Index', () => {
     });
 
     it('Should return correct index in an array search terms', () => {
-      expect(invertedIndex.searchIndex('books.json', ['alice', 'a', 'hole']))
+      expect(invertedIndex.searchIndex('books.json', ['alice', 'a', 'hole', 'lord']))
         .toEqual([{
           terms: {
             alice: [1],
             hole: [1],
-            a: [1, 2]
+            a: [1, 2],
+            lord: [2]
           },
           count: 2,
           fileName: 'books.json'
@@ -161,11 +162,12 @@ describe('Inverted Index', () => {
         }]);
 
       expect(invertedIndex
-          .searchIndex('littleBook.json', 'is', 'progress'))
+          .searchIndex('littleBook.json', 'is', 'progress', 'this'))
         .toEqual([{
           terms: {
             is: [1, 2],
-            progress: [2]
+            progress: [2],
+            this: [2],
           },
           count: 2,
           fileName: 'littleBook.json'
