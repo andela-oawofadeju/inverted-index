@@ -103,6 +103,11 @@ describe('Inverted Index', () => {
         .toEqual(['this', 'is', 'yemi']);
     });
 
+    it('Should return an array when an array is passed', () => {
+      expect(InvertedIndex.tokenizer(['testing#%', 'for*%$', 'array#@%']))
+        .toEqual(['testing', 'for', 'array']);
+    });
+
     it('Should return an array for strings with special characters', () => {
       expect(InvertedIndex.tokenizer('$#@ this&#@ is*&% testing'))
       .toEqual(['this', 'is', 'testing']);
@@ -150,6 +155,7 @@ describe('Inverted Index', () => {
           fileName: 'books.json'
         }]);
     });
+
     it('Should ensure searchIndex handles varied search terms as arguments', () => {
       expect(invertedIndex
           .searchIndex('littleBook.json', 'is'))
