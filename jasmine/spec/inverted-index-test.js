@@ -9,7 +9,6 @@ const invalid = require('../invalidBook.json');
 const little = require('../littleBook.json');
 
 describe('Inverted Index', () => {
-
   describe('Read book data', () => {
     it('Should ensure file content is actually a valid JSON array', () => {
       expect(InvertedIndex.validateFile(books)).toEqual(true);
@@ -97,7 +96,7 @@ describe('Inverted Index', () => {
     });
 
     it('Should return an array for strings with white spaces', () => {
-      expect(InvertedIndex.tokenizer('    these     are    lots     of      spaces   '))
+      expect(InvertedIndex.tokenizer('    these     are    lots  of  spaces '))
   .toEqual(['these', 'are', 'lots', 'of', 'spaces']);
     });
 
@@ -121,7 +120,8 @@ describe('Inverted Index', () => {
     });
 
     it('Should return correct index in an array search terms', () => {
-      expect(invertedIndex.searchIndex('books.json', ['alice', 'a', 'hole', 'lord']))
+      expect(invertedIndex
+      .searchIndex('books.json', ['alice', 'a', 'hole', 'lord']))
         .toEqual([{
           terms: {
             alice: [1],
@@ -134,7 +134,7 @@ describe('Inverted Index', () => {
         }]);
     });
 
-    it('Should ensure searchIndex handles varied search terms as arguments', () => {
+    it('Should ensure searchIndex handles varied terms as arguments', () => {
       expect(invertedIndex
           .searchIndex('littleBook.json', 'is'))
         .toEqual([{
