@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/andela-oawofadeju/inverted-index.svg?branch=master)](https://travis-ci.org/andela-oawofadeju/inverted-index)
 [![Coverage Status](https://coveralls.io/repos/github/andela-oawofadeju/inverted-index/badge.svg?branch=master)](https://coveralls.io/github/andela-oawofadeju/inverted-index?branch=master)
-[![Code Climate](https://codeclimate.com/github/andela-oawofadeju/inverted-index/badges/gpa.svg?branch=master)](https://codeclimate.com/github/andela-oawofadeju/inverted-index?branch=master)
 [![Issue Count](https://codeclimate.com/github/andela-oawofadeju/inverted-index/badges/issue_count.svg)](https://codeclimate.com/github/andela-oawofadeju/inverted-index)
 # inverted-index
 
@@ -15,11 +14,23 @@
 
 - A feature for searching through multiple files
 
+###The URL to this project is:
+
+- https://web-inverted-index.herokuapp.com/
 
 ###How to use
+
+
+##Test
+
+- Run ```npm test```
 
 - You should clone this repository using the command-->```git clone https://github.com/andela-oawofadeju/inverted-index/tree/develop```
 
 - You need to have node on ur computer
 
 - You need to install some dependencies provided in the package.json file.
+- Run ```npm install```
+
+-To start the app,
+Run ```npm start```
