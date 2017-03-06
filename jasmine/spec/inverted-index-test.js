@@ -1,7 +1,4 @@
-/* eslint-disable no-unused-vars*/
 /* eslint-disable no-undef*/
-/* eslint-disable no-dupe-keys*/
-/* eslint-disable no-multi-assign*/
 const invertedIndex = new InvertedIndex();
 const books = require('../books.json');
 const empty = require('../emptyBook.json');
@@ -25,10 +22,16 @@ describe('Inverted Index', () => {
 
   describe('Populate Index', () => {
     invertedIndex.createIndex('books.json', books);
-
+    invertedIndex.createIndex('littleBook.json', books);
 
     it('Should ensure that index is created once file has been read', () => {
       expect(invertedIndex.indices['books.json']).toBeDefined();
+    });
+
+    it('Should ensure index is not overwritten by a new JSON file.', () => {
+      expect(invertedIndex.indices['books.json'].terms.alice).toEqual([1]);
+      expect(invertedIndex.indices['littleBook.json'].terms.ali).toEqual([1]);
+      expect(invertedIndex.indices['books.json'].terms.lord).toEqual([2]);
     });
 
     it('Should map the string keys to the correct objects', () => {
