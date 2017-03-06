@@ -5,6 +5,7 @@
 
 ####Inverted index is a front-end web application that consists of a list of all the unique words in a document specifically a JSON file.
 
+#####To know more about this project, visit: https://www.elastic.co/guide/en/elasticsearch/guide/current/inverted-index.html
 
 ####It has the following features:
 
