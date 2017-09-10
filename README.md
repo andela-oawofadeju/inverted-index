@@ -3,11 +3,11 @@
 [![Issue Count](https://codeclimate.com/github/andela-oawofadeju/inverted-index/badges/issue_count.svg)](https://codeclimate.com/github/andela-oawofadeju/inverted-index)
 # Inverted-Index
 
-####Inverted index is a front-end web application that consists of a list of all the unique words in a document specifically a JSON file.
+#### Inverted index is a front-end web application that consists of a list of all the unique words in a document specifically a JSON file.
 
-#####To know more about this project, visit: https://www.elastic.co/guide/en/elasticsearch/guide/current/inverted-index.html
+##### To know more about this project, visit: https://www.elastic.co/guide/en/elasticsearch/guide/current/inverted-index.html
 
-####It has the following features:
+#### It has the following features:
 
 - A feature for creating index when a file is uploaded asynchronously
 
@@ -15,18 +15,18 @@
 
 - A feature for searching through multiple files
 
-###The URL to this project is:
+### The URL to this project is:
 
 - https://web-inverted-index.herokuapp.com/
 
-###How to use
+### How to use
 
 
-####Test
+#### Test
 
 - Run ```npm test```
 
-####Running the App
+#### Running the App
 
 - You should clone this repository using the command-->```git clone https://github.com/andela-oawofadeju/inverted-index/tree/develop```
 
